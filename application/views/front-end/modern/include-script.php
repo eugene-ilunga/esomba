@@ -1,4 +1,5 @@
 <script src="<?= base_url("assets/front_end/modern/js/eshop-bundle-js.js") ?>"></script>
+<script src="<?= base_url("assets/front_end/shared/js/register-email-auth.js") ?>"></script>
 
 <script src="<?= base_url("assets/front_end/modern/js/eshop-bundle-top-js.js") ?>" type="module"></script>
 <!-- lazy-load js -->

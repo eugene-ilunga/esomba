@@ -231,6 +231,48 @@ class Auth extends CI_Controller
     public function forgot_password()
     {
         $this->data['title'] = $this->lang->line('forgot_password_heading');
+        $email = strtolower(trim($this->input->post('email', true)));
+        $identity_input = trim($this->input->post('identity', true));
+        $mobile = trim($this->input->post('mobile', true));
+
+        if (empty($email) && filter_var($identity_input, FILTER_VALIDATE_EMAIL)) {
+            $email = strtolower($identity_input);
+        }
+
+        if (!empty($email)) {
+            $_POST['email'] = $email;
+            $this->form_validation->set_rules('email', $this->lang->line('forgot_password_validation_email_label'), 'required|xss_clean|valid_email');
+
+            if (!$this->form_validation->run()) {
+                $response['error'] = true;
+                $response['csrfName'] = $this->security->get_csrf_token_name();
+                $response['csrfHash'] = $this->security->get_csrf_hash();
+                $response['message'] = validation_errors() ?: $this->session->flashdata('message');
+                echo json_encode($response);
+                return false;
+            }
+
+            $this->ion_auth->ion_auth_model->identity_column = 'email';
+            $identity = $this->ion_auth->where('email', $email)->where('active', 1)->users()->row();
+
+            if (empty($identity)) {
+                $response['error'] = true;
+                $response['csrfName'] = $this->security->get_csrf_token_name();
+                $response['csrfHash'] = $this->security->get_csrf_hash();
+                $response['message'] = 'Email address could not be found.';
+                echo json_encode($response);
+                return false;
+            }
+
+            $forgotten = $this->ion_auth->forgotten_password($email);
+
+            $response['error'] = !$forgotten;
+            $response['csrfName'] = $this->security->get_csrf_token_name();
+            $response['csrfHash'] = $this->security->get_csrf_hash();
+            $response['message'] = $forgotten ? $this->ion_auth->messages() : $this->ion_auth->errors();
+            echo json_encode($response);
+            return false;
+        }
 
         // setting validation rules by checking whether identity is username or email
         if ($this->config->item('identity', 'ion_auth') != 'email') {
@@ -269,7 +311,7 @@ class Auth extends CI_Controller
            
             $identity_column = $this->config->item('identity', 'ion_auth');
 
-            $identity = $this->ion_auth->where($identity_column, $this->input->post('mobile'))->users()->row();
+            $identity = $this->ion_auth->where($identity_column, $mobile)->users()->row();
        
             if (empty($identity)) {
 
@@ -312,11 +354,18 @@ class Auth extends CI_Controller
      */
 
     public function reset_password($code = NULL)
-    {        if (!$code) {
-
+    {
+        if (!$code) {
             show_404();
         }
-    
+
+        $user = $this->ion_auth->forgotten_password_check($code);
+        if (!$user) {
+            $this->session->set_flashdata('message', $this->ion_auth->errors());
+            return redirect(base_url('register'), 'refresh');
+        }
+
+        $this->data['title'] = $this->lang->line('reset_password_heading');
         $this->form_validation->set_rules(
             'new',
             $this->lang->line('reset_password_validation_new_password_label'),
@@ -327,55 +376,59 @@ class Auth extends CI_Controller
             $this->lang->line('reset_password_validation_new_password_confirm_label'),
             'required'
         );
-        
-        if (!$this->form_validation->run()) {
-            
-            // Validation failed
-            $response['error'] = true; // Set error to true when validation fails
-            $response['csrfName'] = $this->security->get_csrf_token_name();
-            $response['csrfHash'] = $this->security->get_csrf_hash();
-            $response['message'] = validation_errors(); // Send validation errors
-            echo json_encode($response);
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->data['message'] = validation_errors() ?: $this->session->flashdata('message');
+            $this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
+            $this->data['new_password'] = [
+                'name' => 'new',
+                'id' => 'new',
+                'type' => 'password',
+                'pattern' => '^.{8}.*$',
+            ];
+            $this->data['new_password_confirm'] = [
+                'name' => 'new_confirm',
+                'id' => 'new_confirm',
+                'type' => 'password',
+                'pattern' => '^.{8}.*$',
+            ];
+            $this->data['user_id'] = [
+                'name' => 'user_id',
+                'id' => 'user_id',
+                'type' => 'hidden',
+                'value' => $user->id,
+            ];
+            $this->data['csrf'] = $this->_get_csrf_nonce();
+            $this->data['code'] = $code;
+            $this->_render_page('auth' . DIRECTORY_SEPARATOR . 'reset_password', $this->data);
             return;
-            
-        } else {
-            // Validation succeeded
-            $response['error'] = false; // Set error to false when validation succeeds
-            $response['csrfName'] = $this->security->get_csrf_token_name();
-            $response['csrfHash'] = $this->security->get_csrf_hash();
-            $response['message'] = 'Password reset successful'; // Success message
-            echo json_encode($response);
-           
         }
-        
-        $user = $this->ion_auth->forgotten_password_check($code);
-        if (!$user) {
-           
-            $this->session->set_flashdata('message', "User not found!");
-            return redirect("admin/login/forgot_password", 'refresh');
+
+        if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
+            show_error($this->lang->line('error_csrf'));
         }
-    
-        $identity = $user->{$this->config->item('identity', 'ion_auth')};
-    
-        if ($user->id != $this->input->post('user_id')) {
-          
-            $this->session->set_flashdata('message', "Invalid user!");
-            return redirect("admin/login/forgot_password", 'refresh');
+
+        $identity = (!empty($user->email) && (!isset($user->type) || $user->type !== 'phone'))
+            ? $user->email
+            : $user->{$this->config->item('identity', 'ion_auth')};
+
+        if (filter_var($identity, FILTER_VALIDATE_EMAIL)) {
+            $this->ion_auth->ion_auth_model->identity_column = 'email';
         }
-    
-        // Change the password
+
         $change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
         $this->ion_auth->clear_forgotten_password_code($identity);
-    
+
         if ($change) {
-           
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            return redirect("admin/login", 'refresh');
-        } else {
-            
-            $this->session->set_flashdata('message', $this->ion_auth->errors());
-            return redirect('auth/reset_password/' . $code, 'refresh');
+            if ($this->ion_auth->in_group('admin', $user->id)) {
+                return redirect('admin/login', 'refresh');
+            }
+            return redirect(base_url('register'), 'refresh');
         }
+
+        $this->session->set_flashdata('message', $this->ion_auth->errors());
+        return redirect('auth/reset_password/' . $code, 'refresh');
     }
     
     /**
@@ -946,7 +999,10 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('friends_code', 'Friends code', 'trim|xss_clean');
         $this->form_validation->set_rules('latitude', 'Latitude', 'trim|xss_clean');
         $this->form_validation->set_rules('longitude', 'Longitude', 'trim|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']');
+        if (isset($_POST['type']) && $_POST['type'] == 'email') {
+            $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+        }
 
         $this->response['csrfName'] = $this->security->get_csrf_token_name();
         $this->response['csrfHash'] = $this->security->get_csrf_hash();
@@ -1035,8 +1091,24 @@ class Auth extends CI_Controller
                 }
             }
             $res = $this->ion_auth->register($identity, $password, $email, $additional_data, ['2']);
+            if (!$res) {
+                $this->response['error'] = true;
+                $this->response['message'] = strip_tags($this->ion_auth->errors());
+                $this->response['csrfName'] = $this->security->get_csrf_token_name();
+                $this->response['csrfHash'] = $this->security->get_csrf_hash();
+                $this->response['data'] = array();
+                print_r(json_encode($this->response));
+                return false;
+            }
             update_details(['active' => 1], [$identity_column => $identity], 'users');
-            $data = $this->db->select('u.id,u.username,u.email,u.mobile,c.name as city_name,a.name as area_name')->where([$identity_column => $identity])->join('cities c', 'c.id=u.city', 'left')->join('areas a', 'a.city_id=c.id', 'left')->group_by('email')->get('users u')->result_array();
+            $data = $this->db
+                ->select('u.id,u.username,u.email,u.mobile,c.name as city_name,a.name as area_name')
+                ->where([$identity_column => $identity])
+                ->join('cities c', 'u.city = c.id', 'left')
+                ->join('areas a', 'u.area = a.id', 'left')
+                ->limit(1)
+                ->get('users u')
+                ->result_array();
 
             $this->response['error'] = false;
             $this->response['message'] = 'Registered Successfully';

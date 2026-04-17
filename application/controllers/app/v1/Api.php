@@ -2699,7 +2699,14 @@ Defined Methods:-
             }
 
             update_details(['active' => 1], [$identity_column => $identity], 'users');
-            $data = $this->db->select('u.id,u.username,u.email,u.mobile,c.name as city_name,a.name as area_name')->where([$identity_column => $identity])->join('cities c', 'c.id=u.city', 'left')->join('areas a', 'a.city_id=c.id', 'left')->group_by('email')->get('users u')->result_array();
+            $data = $this->db
+                ->select('u.id,u.username,u.email,u.mobile,c.name as city_name,a.name as area_name')
+                ->where([$identity_column => $identity])
+                ->join('cities c', 'u.city = c.id', 'left')
+                ->join('areas a', 'u.area = a.id', 'left')
+                ->limit(1)
+                ->get('users u')
+                ->result_array();
 
             foreach ($data as $row) {
                 $row = output_escaping($row);

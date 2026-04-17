@@ -1,21 +1,24 @@
 <?php
 $registrationSectionDisplay = 'none';
 $loginSectionDisplay = 'none';
-$verifyOtpForm = '';
-$signUpForm = 'style="display:none"';
+$verifyOtpForm = 'style="display:none"';
+$signUpForm = '';
+$showOtpRegistration = false;
+$showPhoneLogin = false;
+$showPhonePasswordReset = false;
 ?>
 <main>
     <section class="container my-5">
         <div class="row register-login-section">
             <!-- registration section-->
-            <div id="register_div" class="col-md-6 px-5 registration-section">
+            <div id="register_div" class="col-md-6 px-5 registration-section" data-registration-mode="email">
                 <h4 class="mb-3 section-title"><?= label('register', 'REGISTER') ?></h4>
-                <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
+                <?php if ($showOtpRegistration && (!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
                 <div class="mb-3 mt-3">
                     <a href="#" id="emailLogin" class="text-decoration-underline email-login"><?= label('register_with_email', 'Register with Email?') ?></a>
                 </div>
                 <?php } ?>
-                <form id='send-otp-form' class='send-otp-form cmxform' action='#'>
+                <form id='send-otp-form' class='send-otp-form cmxform d-none' action='#'>
                     <div class="mb-3 sign-up-verify-number">
                         <label for="exampleFormUsername" class="form-label">
                             <p class="form-lable"><?= label('mobile_number', 'Mobile Number') ?><sup
@@ -32,7 +35,7 @@ $signUpForm = 'style="display:none"';
                             class="btn Register-btn submit-btn send_otp_button"><?= label('send_otp', 'Send OTP') ?></button>
                     </div>
                 </form>
-                <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
+                <?php if ($showOtpRegistration && (!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
                 <div class="mb-3 mt-3">
                     <a href="#" id="phoneLogin" class="text-decoration-underline phone-login d-none"><?= label('register_with_phone', 'Register with Phone?') ?></a>
                 </div>
@@ -96,6 +99,7 @@ $signUpForm = 'style="display:none"';
                         class="btn btn-primary Register-btn register_submit_btn"><?= label('submit', 'Submit') ?></button>
                 </form>
                 <form id='sign-up-form' class='sign-up-form' action='#' <?php echo $signUpForm; ?>>
+                    <input type="hidden" name="type" value="email">
                     <div class="mb-3 sign-up-verify-number">
                         <label for="exampleFormUsername" class="form-label">
 
@@ -156,7 +160,7 @@ $signUpForm = 'style="display:none"';
             <div class="col-md-6 px-5 login-section" style="display:<?php echo $registrationSectionDisplay; ?>;">
                 <h4 class="mb-3 section-title"><?= label('login', 'LOGIN') ?></h4>
                 <form action="<?= base_url('home/login') ?>" class='form-submit-event' id="login_form" method="post">
-                    <div id="mobile-form" class="mobile-form">
+                    <div id="mobile-form" class="mobile-form d-none">
                         <div class="mb-3">
                             <label for="Username" class="form-label">
                                 <p class="form-lable"> <?= label('mobile_number', 'Mobile Number') ?> <sup
@@ -164,20 +168,21 @@ $signUpForm = 'style="display:none"';
                             </label>
                             <input type="number" class="form-control" name="identity" pattern="\d*" maxlength="16"
                                 placeholder="<?= label('mobile_number', 'Mobile number') ?>" <?= (ALLOW_MODIFICATION == 0) ? 'value="9876543210"' : ""; ?>
-                                required>
+                                >
                         </div>
                     </div>
-                    <div id="email-form" class="email-form d-none">
+                    <div id="email-form" class="email-form">
                         <div class="mb-3">
                             <label for="Email" class="form-label">
                                 <p class="form-lable"> <?= label('email', 'Email') ?> <sup
                                         class="text-danger fw-bold">*</sup></p>
                             </label>
-                            <input type="email" class="form-control" name="email" 
-                                placeholder="<?= label('email_address', 'Email address') ?>">
+                            <input type="email" class="form-control" name="identity" 
+                                placeholder="<?= label('email_address', 'Email address') ?>" required>
+                            <input type="hidden" name="type" value="email">
                         </div>
                     </div>
-                    <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
+                    <?php if ($showPhoneLogin && (!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
                     <div class="mb-3 mt-3">
                         <a href="#" id="login-phoneLogin" class="text-decoration-underline login-phone-login d-none"><?= label('login_with_phone', 'Login with Phone?') ?></a>
                     </div>
@@ -218,7 +223,7 @@ $signUpForm = 'style="display:none"';
                     <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) {
                         ?>
                         <div class="d-flex justify-content-around my-2">
-                                            <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
+                            <?php if ($showPhoneLogin && (!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
                             <a href="#" id="login-emailLogin-btn" class="emailLogin">
                                 <div class="thirdparty-login">
                                     <img src="<?= base_url('assets/front_end/modern/image/pictures/mail.png') ?> "
@@ -269,7 +274,7 @@ $signUpForm = 'style="display:none"';
             <div class="col-md-6 px-5 text-center Register-text">
                 <div class="login-text" id="login-text">
                     <h4 class="mb-3 section-title"><?= label('login', 'LOGIN') ?></h4>
-                    <p class="mb-3"><?= label('login_description', 'To access your account and enjoy a seamless shopping experience, simply enter your registered Mobile Number and password in the designated fields. Once logged in, you\'ll have access to your personalized dashboard, order history, saved payment methods, and more.') ?>
+                    <p class="mb-3"><?= label('login_description', 'To access your account and enjoy a seamless shopping experience, simply enter your registered email address and password in the designated fields. Once logged in, you\'ll have access to your personalized dashboard, order history, saved payment methods, and more.') ?>
                     </p>
                     <button type="button" class="btn login-register-btn login-btn fw-bold"><?= label('login', 'Login') ?></button>
                 </div>
@@ -327,11 +332,12 @@ $signUpForm = 'style="display:none"';
         <section class="row justify-content-center forget-password-section" id="forget-password-section">
             <div class="col-md-6 px-5">
                 <h4 class="mb-3 section-title"><?= label('forgot_password', 'FORGET PASSWORD') ?></h4>
-                <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
+                <?php if ($showPhonePasswordReset && (!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
                 <div class="mb-3 mt-3">
                     <a href="#" id="forgot-password-email-link" class="text-decoration-underline"><?= label('forgot_password_with_email', 'Forgot password with Email?') ?></a>
                 </div>
                 <?php } ?>
+                <?php if ($showPhonePasswordReset) { ?>
                 <form id="send_forgot_password_otp_form" method="POST" action="#">
                     <input type="hidden" name="forget_password_val" value="1" id="forget_password_val">
 
@@ -380,18 +386,18 @@ $signUpForm = 'style="display:none"';
                         <div class="form-group" id="set_password_error_box"></div>
                     </div>
                 </form>
-
-                <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
+                <?php } ?>
+                <?php if ($showPhonePasswordReset && (!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
                 <div class="mb-3 d-none" id="forgot-password-phone-div">
                     <a href="#" id="forgot-password-phone" class="text-decoration-underline"><?= label('forgot_password_with_phone', 'Forgot password with Phone Number?') ?></a>
                 </div>
                 <?php } ?>
-                <form id="forgot-password-email-form" class="d-none" method="post" action="#">
+                <form id="forgot-password-email-form" method="post" action="#">
                     <div class="input-group">
                         <label for="forgot_password_email" class="form-label">
                             <p class="form-lable"><?= label('email', 'Email') ?></p>
                         </label>
-                        <input type="email" class="form-control" name="forgot_password_email" id="forgot_password_email"
+                        <input type="email" class="form-control" name="email" id="forgot_password_email"
                             placeholder="<?= label('email', 'Email') ?>">
                     </div>
                     <footer class="mt-2">

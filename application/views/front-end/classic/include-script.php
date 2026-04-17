@@ -1,4 +1,5 @@
 <script src="<?= THEME_ASSETS_URL . 'js/eshop-bundle-js.js' ?>"></script>
+<script src="<?= base_url("assets/front_end/shared/js/register-email-auth.js") ?>"></script>
 
 <!-- Firebase.js -->
 <script src="<?= THEME_ASSETS_URL . 'js/firebase-app.js' ?>"></script>

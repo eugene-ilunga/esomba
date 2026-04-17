@@ -4811,20 +4811,22 @@ $(document).ready(() => {
   $(document).on("submit", "#sign-up-form", function (e) {
     e.preventDefault();
 
+    var form = $(this);
     var email = $(this).find('input[name="email"]').val();
     var password = $(this).find('input[name="password"]').val();
-    var confirmPassword = $('input[name="confirm_password"]').val();
+    var confirmPassword = $(this).find('input[name="confirm_password"]').val();
     var username = $(this).find('input[name="username"]').val();
     var type = "email";
-    var web_fcm = $("#web_fcm").val();
-    var passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    var web_fcm = $("#web_fcm").val() || "";
+    var friendsCode = $(this).find('input[name="friends_code"]').val();
+    var referralCode = $(this).find('input[name="referral_code"]').val();
+    var submitBtn = form.find('button[type="submit"]');
+    var submitBtnHtml = submitBtn.html();
 
-    if (!passwordRegex.test(password)) {
+    if (password.length < 8) {
       Toast.fire({
         icon: "error",
-        title:
-          "Password must be at least 8 characters, with one uppercase letter, one lowercase letter, one number, and one special character.",
+        title: "Password must be at least 8 characters long.",
       });
       return;
     }
@@ -4838,102 +4840,68 @@ $(document).ready(() => {
     }
     $.ajax({
       type: "POST",
-      url: base_url + "home/verifyUser",
+      url: base_url + "auth/register_user",
       data: {
+        name: username,
         email: email,
+        password: password,
+        confirm_password: confirmPassword,
         type: type,
+        web_fcm: web_fcm,
+        friends_code: friendsCode,
+        referral_code: referralCode,
         [csrfName]: csrfHash,
       },
       dataType: "json",
+      beforeSend: function () {
+        $("#sign-up-error").html("");
+        submitBtn
+          .html(
+            '<div class="spinner-border" role="status">' +
+            '<span class="visually-hidden">Loading...</span>' +
+            "</div>",
+          )
+          .attr("disabled", true);
+      },
       success: function (result) {
         csrfName = result.csrfName;
         csrfHash = result.csrfHash;
+        submitBtn.html(submitBtnHtml).attr("disabled", false);
 
-        if (result.error == true) {
-          // Create the user in Firebase
-          firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(function (userCredential) {
-              userCredential.user
-                .sendEmailVerification()
-                .then(() => {
-                  Swal.fire({
-                    title: "Verification Email Sent",
-                    text: "Please check your email to verify your account before logging in.",
-                    icon: "info",
-                  });
-                })
-                .catch((error) => {
-                  Toast.fire({
-                    icon: "error",
-                    title: "ERROR: " + error.message,
-                  });
-                });
-              setTimeout(function () {
-                userCredential.user.updateProfile({
-                  displayName: username,
-                });
-              }, 2000);
-            })
-            .then(function () {
-              var formData = {
-                name: username,
-                email: email,
-                password: password,
-                type: type,
-                web_fcm: web_fcm,
-                [csrfName]: csrfHash,
-              };
-
-              $.ajax({
-                type: "POST",
-                url: base_url + "auth/register_user",
-                data: formData,
-                dataType: "json",
-                success: function (result) {
-                  csrfName = result["csrfName"];
-                  csrfHash = result["csrfHash"];
-                  Toast.fire({
-                    icon: "success",
-                    title:
-                      "Registration successful! Please verify your email before logging in.",
-                  });
-
-                  if (result.error == false) {
-                    Swal.fire({
-                      title: "Registration Complete",
-                      text: "Your account has been created successfully. Please check your email and verify your account before logging in.",
-                      icon: "success",
-                      confirmButtonText: "OK",
-                    });
-                    setTimeout(function () {
-                      location.reload();
-                    }, 2000);
-                  } else {
-                    $("#sign-up-error").html(
-                      '<div class="alert alert-danger">' +
-                      result.message +
-                      "</div>",
-                    );
-                  }
-                },
-              });
-            })
-            .catch(function (error) {
-              // Handle Firebase errors
-              var errorMessage = error.message;
-              $("#sign-up-error").html(
-                '<div class="alert alert-danger">' + errorMessage + "</div>",
-              );
-            });
+        if (result.error == false) {
+          form[0].reset();
+          $("#mobile-form").addClass("d-none");
+          $("#email-form").removeClass("d-none");
+          $("#email-form").find('input[name="identity"]').val(email);
+          $("#login_form").attr("data-login-mode", "email");
+          $("#sign-up-error").html(
+            '<div class="alert alert-success">' + result.message + "</div>",
+          );
+          Toast.fire({
+            icon: "success",
+            title: result.message,
+          });
         } else {
           $("#sign-up-error").html(
             '<div class="alert alert-danger">' +
-            "Email is already registered" +
+            result.message +
             "</div>",
           );
         }
+      },
+      error: function (xhr) {
+        submitBtn.html(submitBtnHtml).attr("disabled", false);
+        var errorMessage =
+          xhr.responseJSON && xhr.responseJSON.message
+            ? xhr.responseJSON.message
+            : "Registration failed. Please try again.";
+        $("#sign-up-error").html(
+          '<div class="alert alert-danger">' + errorMessage + "</div>",
+        );
+        Toast.fire({
+          icon: "error",
+          title: errorMessage,
+        });
       },
     });
   });
@@ -5722,9 +5690,16 @@ $(".zoom_03").elevateZoom({
 });
 
 $(this).removeClass("d-none");
-$(".send-otp-form").show();
-$("#verify-otp-form").addClass("d-none");
-$(".sign-up-form").hide();
+var registerMode = $("#register_div").data("registration-mode");
+if ($("#register_div").length && registerMode === "email") {
+  $("#register_div .send-otp-form").hide().addClass("d-none");
+  $("#register_div #verify-otp-form").addClass("d-none").hide();
+  $("#register_div .sign-up-form").show().css("display", "block");
+} else {
+  $(".send-otp-form").show();
+  $("#verify-otp-form").addClass("d-none");
+  $(".sign-up-form").hide();
+}
 $("#is-user-exist-error").html("");
 $("#sign-up-error").html("");
 
@@ -6610,7 +6585,7 @@ $(document).ready(() => {
     $("#verify_forgot_password_otp_form").addClass("d-none").hide();
     // Show email form and switch link
     $("#forgot-password-email-form").removeClass("d-none").show();
-    $("#forgot-password-phone-div").removeClass("d-none").show();
+    $("#forgot-password-phone-div").addClass("d-none").hide();
     $("#forgot-password-email-link").addClass("d-none");
     // Clear any error messages and reset forms
     $("#forgot_pass_error_box").html("");
@@ -6652,25 +6627,41 @@ $(document).ready(() => {
     $("#send_firebase_reset_email_btn")
       .attr("disabled", true)
       .text("Sending...");
-    firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(function () {
+    $.ajax({
+      type: "POST",
+      url: base_url + "auth/forgot_password",
+      data: {
+        email: email,
+        [csrfName]: csrfHash,
+      },
+      dataType: "json",
+      success: function (result) {
+        csrfName = result.csrfName;
+        csrfHash = result.csrfHash;
         $("#forgot_pass_email_error_box").html(
-          '<span class="text-success">Password reset email sent! Please check your inbox.</span>',
+          '<span class="' +
+            (result.error ? "text-danger" : "text-success") +
+            '">' +
+            result.message +
+            "</span>",
         );
         $("#send_firebase_reset_email_btn")
           .attr("disabled", false)
           .text("Send Reset Email");
-      })
-      .catch(function (error) {
+      },
+      error: function (xhr) {
+        var errorMessage =
+          xhr.responseJSON && xhr.responseJSON.message
+            ? xhr.responseJSON.message
+            : "Unable to send reset email.";
         $("#forgot_pass_email_error_box").html(
-          '<span class="text-danger">' + error.message + "</span>",
+          '<span class="text-danger">' + errorMessage + "</span>",
         );
         $("#send_firebase_reset_email_btn")
           .attr("disabled", false)
           .text("Send Reset Email");
-      });
+      },
+    });
   });
 
   let paramQueries = new URLSearchParams(window.location.search);
