@@ -1140,7 +1140,7 @@ class Order_model extends CI_Model
         }
 
 
-        $count_res = $this->db->select(' COUNT(o.id) as `total` ,p.type')
+        $count_res = $this->db->select(' COUNT(DISTINCT(o.id)) as `total`')
             ->join(' `users` u', 'u.id= o.user_id', 'left')
             ->join(' `order_items` oi', 'oi.order_id= o.id', 'left')
             ->join('product_variants v ', ' oi.product_variant_id = v.id', 'left')
@@ -1176,7 +1176,7 @@ class Order_model extends CI_Model
             $total = $row['total'];
         }
 
-        $search_res = $this->db->select(' o.* , u.username, db.username as delivery_boy,p.type')
+        $search_res = $this->db->select(' o.* , u.username, db.username as delivery_boy')
             ->join(' `users` u', 'u.id= o.user_id', 'left')
             ->join(' `order_items` oi', 'oi.order_id= o.id', 'left')
             ->join('product_variants v ', ' oi.product_variant_id = v.id', 'left')
@@ -1358,7 +1358,7 @@ class Order_model extends CI_Model
         }
 
 
-        $count_res = $this->db->select(' COUNT(o.id) as `total`,p.type')
+        $count_res = $this->db->select(' COUNT(o.id) as `total`')
             ->join(' `orders` o', 'o.id= oi.order_id')
             ->join('product_variants v ', ' oi.product_variant_id = v.id', 'left')
             ->join('products p ', ' p.id = v.product_id ', 'left')
@@ -1952,7 +1952,7 @@ class Order_model extends CI_Model
             ];
         }
 
-        $count_res = $this->db->select(' COUNT(o.id) as `total`,p.type')
+        $count_res = $this->db->select(' COUNT(o.id) as `total`')
             ->join(' `orders` o', 'o.id= oi.order_id')
             ->join('product_variants v ', ' oi.product_variant_id = v.id', 'left')
             ->join('products p ', ' p.id = v.product_id ', 'left')

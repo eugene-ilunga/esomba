@@ -2931,7 +2931,7 @@ function fetch_orders($order_id = NULL, $user_id = NULL, $status = NULL, $delive
         $total = $row['total'];
     }
 
-    $search_res = $t->db->select(' o.*, u.username,u.country_code,p.name,p.download_allowed,a.name as user_name,a.mobile as recipient_contact,p.pickup_location as pickup_location, oi.return_reason, oi.return_item_image')
+    $search_res = $t->db->select(' o.*, u.username,u.country_code,a.name as user_name,a.mobile as recipient_contact')
         ->join(' `users` u', 'u.id= o.user_id', 'left')
         ->join(' `order_items` oi', 'o.id= oi.order_id', 'left')
         ->join('product_variants pv', 'pv.id=oi.product_variant_id', 'left')
@@ -3209,6 +3209,11 @@ function fetch_orders($order_id = NULL, $user_id = NULL, $status = NULL, $delive
                 $already_returned_count += $order_item_data[$k]['is_already_returned'];
                 $already_cancelled_count += $order_item_data[$k]['is_already_cancelled'];
             }
+        }
+
+        if (empty($order_details[$i]['pickup_location']) && !empty($order_item_data)) {
+            $pickup_locations = array_values(array_filter(array_unique(array_column($order_item_data, 'pickup_location'))));
+            $order_details[$i]['pickup_location'] = !empty($pickup_locations) ? $pickup_locations[0] : '';
         }
 
         $order_details[$i]['address_id'] = (isset($order_details[$i]['address_id']) && !empty($order_details[$i]['address_id'])) ? $order_details[$i]['address_id'] : "";
