@@ -186,7 +186,7 @@ $currency = get_settings('currency');
                                 <?php $check_current_stock_status = validate_stock([$items['product_variant_id']], [$items['qty']]); ?>
                                 <div class="product-title"><?= html_escape($items['name']) ?>
                                     <?= (isset($check_current_stock_status['error']) && $check_current_stock_status['error'] == TRUE)
-                                        ? "<span class='badge badge-danger'> Out of Stock </span>"
+                                        ? "<span class='badge badge-danger'>" . label('out_of_stock', 'Out of Stock') . "</span>"
                                         : "" ?>
                                 </div>
                                 <?php if (!empty($items['product_variants']) && isset($items['product_variants'][0]['variant_values']) && !empty($items['product_variants'][0]['variant_values'])) { ?>
@@ -476,7 +476,7 @@ $currency = get_settings('currency');
                                         </li>
                                         <li class="morph-text">
                                             <a
-                                                href="<?= base_url('products/offers_and_flash_sale') ?>"><?= label('top_offer', 'Top Offers') ?></a>
+                                                href="<?= base_url('products/offers_and_flash_sale') ?>"><?= label('top_offers', 'Top Offers') ?></a>
                                         </li>
                                         <li class="morph-text">
                                             <a

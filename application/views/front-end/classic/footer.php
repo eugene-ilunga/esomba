@@ -149,7 +149,7 @@
                             <a href="<?= base_url() ?>">
                                 <span><?= output_escaping(str_replace('\r\n', '&#13;&#10;', $web_settings['copyright_details'])) ?></span>
                             </a><?php else: ?>
-                            <span>Copyright &copy; <?= date('Y') - 1 ?> - <?= date('Y') ?>, All Rights Reserved <a
+                            <span>Copyright &copy; <?= date('Y') - 1 ?> - <?= date('Y') ?>, <?= label('all_rights_reserved', 'All Rights Reserved') ?> <a
                                     target="_blank" href="<?= base_url() ?>"><?= base_url() ?></a></span>
                         <?php endif; ?>
                     </div>
@@ -193,15 +193,15 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center newsletter-modal">
-                    <h2 id="newslettermodal">Sign Up And Connect With XShop</h2>
+                    <h2 id="newslettermodal"><?= label('sign_up_and_connect', 'Sign Up And Connect With XShop') ?></h2>
                     <p class="modal-sen">duis convallis convallis tellus id interdum velit laoreet id donec ultrices
                         tincidunt arcu non sodales</p>
                 </div>
                 <div class="modal-body">
                     <div class="modal-newsletter">
                         <p><input type="email" class="form-control modal-form newsletter-field" id="inputEmail4"
-                                placeholder="Your Email Address"></p>
-                        <p><button class="buttons btn-5 default primary-button">Sign Up</button></p>
+                                placeholder="<?= label('your_email_address', 'Your Email Address') ?>"></p>
+                        <p><button class="buttons btn-5 default primary-button"><?= label('sign_up', 'Sign Up') ?></button></p>
                     </div>
                 </div>
             </div>
@@ -215,11 +215,11 @@
     <!-- color switcher -->
     <div id="colors-switcher">
         <div>
-            <h6>Pick Your Theme</h6>
+            <h6><?= label('pick_your_theme', 'Pick Your Theme') ?></h6>
             <ul class="px-2 text-center">
                 <li class="list-item-inline mb-3">
                     <a class="text-decoration-none text-dark" href="<?= base_url("themes/switch/modern") ?>">
-                        <p class="m-0">Modern Theme</p>
+                        <p class="m-0"><?= label('modern_theme', 'Modern Theme') ?></p>
                         <img src="<?= base_url("assets/front_end/classic/images/modern-theme.png.jpg") ?>"
                             alt="Modern image" class="w-75">
 
@@ -227,7 +227,7 @@
                 </li>
                 <li class="list-item-inline mb-3">
                     <a class="text-decoration-none text-dark" href="<?= base_url("themes/switch/classic") ?>">
-                        <p class="m-0">Classic Theme</p>
+                        <p class="m-0"><?= label('classic_theme', 'Classic Theme') ?></p>
                         <img src="<?= base_url("assets/front_end/classic/images/classic-theme.png.jpg") ?>"
                             alt="classic image" class="w-75">
                     </a>
@@ -294,25 +294,25 @@
     <section class="hide" id="login_div">
         <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
             <div class="mb-3 mt-3">
-                <a href="#" id="login-canvas-emailLogin" class="text-decoration-underline emailLogin">Login with Email?</a>
+                <a href="#" id="login-canvas-emailLogin" class="text-decoration-underline emailLogin"><?= label('login_with_email', 'Login with Email?') ?></a>
             </div>
         <?php } ?>
         <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
             <div class="mb-3 mt-3">
-                <a href="#" id="phoneLogin" class="text-decoration-underline phoneLogin d-none">Login with Phone?</a>
+                <a href="#" id="phoneLogin" class="text-decoration-underline phoneLogin d-none"><?= label('login_with_phone', 'Login with Phone?') ?></a>
             </div>
         <?php } ?>
         <form action="<?= base_url('home/login') ?>" class='form-submit-event' id="login_form" method="post">
             <div class="input-group" id="login-mobile-form">
                 <input type="text" class="form-control" name="mobile" pattern="\d*" maxlength="16"
-                    placeholder="Mobile number">
+                    placeholder="<?= label('mobile_number', 'Mobile number') ?>">
             </div>
 
             <div class="input-group d-none" id="login-email-form">
-                <input type="email" class="form-control" name="email" placeholder="Email address">
+                <input type="email" class="form-control" name="email" placeholder="<?= label('email_address', 'Email address') ?>">
             </div>
             <div>
-                <input type="password" class="form-control pe-5" name="password" placeholder="Password" required>
+                <input type="password" class="form-control pe-5" name="password" placeholder="<?= label('password', 'Password') ?>" required>
 
                 <span class="input-group-text togglePassword"
                     style="cursor:pointer; background: transparent; border: 0; position: absolute; right: 35px; top: 64%; transform: translateY(-50%); z-index: 5;">
@@ -335,13 +335,13 @@
 
 
             <?php if ((!empty($system_settings['google_login']) && $system_settings['google_login'] == 1) || (!empty($system_settings['facebook_login']) && $system_settings['facebook_login'] == 1)) { ?>
-                <div class="separator">OR</div>
+                <div class="separator"><?= label('or', 'OR') ?></div>
                 <div class="row">
                     <div class="social-login col-md-12 text-center mt-3">
                         <?php if (!empty($system_settings['google_login']) && $system_settings['google_login'] != '' && ($system_settings['google_login'] == 1 || $system_settings['google_login'] = '1')) { ?>
                             <a href="#" id="googleLogin" class="btn google-btn">
                                 <img src="<?= base_url('assets/front_end/classic/images/Google.png') ?>"
-                                    class="mr-2 width-30px height-30px">Google</a>
+                                    class="mr-2 width-30px height-30px"><?= label('google', 'Google') ?></a>
                         <?php } ?>
                     </div>
                 </div>
@@ -352,17 +352,17 @@
     <section id="register_div">
         <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
             <div class="mb-3 mt-3">
-                <a href="#" id="emailLogin" class="text-decoration-underline email-login">Register with Email?</a>
+                <a href="#" id="emailLogin" class="text-decoration-underline email-login"><?= label('register_with_email', 'Register with Email?') ?></a>
             </div>
         <?php } ?>
         <form id='send-otp-form' class='send-otp-form' action='#'>
             <div class="row sign-up-verify-number">
                 <div class="col-12 d-flex justify-content-center pb-4">
-                    <input type="text" class='form-input' pattern="\d*" maxlength="16" placeholder="Enter Mobile Number"
+                    <input type="text" class='form-input' pattern="\d*" maxlength="16" placeholder="<?= label('enter_mobile_number', 'Enter Mobile Number') ?>"
                         id="phone-number" required>
                 </div>
                 <div class="col-12 d-flex justify-content-center pb-4">
-                    <div id="error-msg" class="hide text-danger">Enter a valid number</div>
+                    <div id="error-msg" class="hide text-danger"><?= label('enter_a_valid_number', 'Enter a valid number') ?></div>
                 </div>
                 <div class="col-12 d-flex justify-content-center pb-4">
                     <div id="recaptcha-container"></div>
@@ -380,13 +380,13 @@
             </footer>
             <br>
             <?php if ((!empty($system_settings['google_login']) && $system_settings['google_login'] == 1) || (!empty($system_settings['facebook_login']) && $system_settings['facebook_login'] == 1)) { ?>
-                <div class="separator">OR</div>
+                <div class="separator"><?= label('or', 'OR') ?></div>
                 <div class="row">
                     <div class="social-login col-md-12 text-center mt-3">
                         <?php if (!empty($system_settings['google_login']) && $system_settings['google_login'] != '' && ($system_settings['google_login'] == 1 || $system_settings['google_login'] = '1')) { ?>
                             <a href="#" id="googleLogin" class="btn google-btn">
                                 <img src="<?= base_url('assets/front_end/classic/images/Google.png') ?>"
-                                    class="mr-2 width-30px height-30px">Google</a>
+                                    class="mr-2 width-30px height-30px"><?= label('google', 'Google') ?></a>
                         <?php } ?>
                     </div>
                 </div>
@@ -394,7 +394,7 @@
         </form>
         <?php if ((!empty($system_settings['email_login']) && $system_settings['email_login'] == 1)) { ?>
             <div class="mb-3 mt-3">
-                <a href="#" id="phoneLogin" class="text-decoration-underline phone-login d-none">Register with Phone?</a>
+                <a href="#" id="phoneLogin" class="text-decoration-underline phone-login d-none"><?= label('register_with_phone', 'Register with Phone?') ?></a>
             </div>
         <?php } ?>
         <form id='verify-otp-form' class='verify-otp-form d-none' action='<?= base_url('auth/register-user') ?>'
@@ -404,16 +404,16 @@
                     <input type="hidden" class='form-input' id="type" name="type" value="phone">
                 </div>
                 <div class="col-12 d-flex justify-content-center pb-4">
-                    <input type="text" class='form-input' placeholder="OTP" id="otp" name="otp" autocomplete="off">
+                    <input type="text" class='form-input' placeholder="<?= label('otp', 'OTP') ?>" id="otp" name="otp" autocomplete="off">
                 </div>
                 <div class="col-12 d-flex justify-content-center pb-4">
-                    <input type="text" class='form-input' placeholder="Username" id="name" name="name">
+                    <input type="text" class='form-input' placeholder="<?= label('username', 'Username') ?>" id="name" name="name">
                 </div>
                 <div class="col-12 d-flex justify-content-center pb-4">
-                    <input type="email" class='form-input' placeholder="Email" id="email" name="email">
+                    <input type="email" class='form-input' placeholder="<?= label('email', 'Email') ?>" id="email" name="email">
                 </div>
                 <div class="col-12 d-flex justify-content-center pb-4">
-                    <input type="password" class='form-input' placeholder="Password" id="password" name="password">
+                    <input type="password" class='form-input' placeholder="<?= label('password', 'Password') ?>" id="password" name="password">
                     <span class="input-group-text togglePassword"
                         style="top: 10%;position: absolute;right: 30px;cursor: pointer;">
                         <i class="fa fa-eye"></i>
@@ -422,7 +422,7 @@
                 <?php $referal_code = substr(str_shuffle(str_repeat("AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890", 8)), 0, 8);
                 ?> <input type="hidden" class='form-input' name="referral_code" value=<?= $referal_code; ?>>
                 <div class="col-12 d-flex justify-content-center pb-4">
-                    <input type="text" class='form-input' placeholder="Friends code" id="friends_code"
+                    <input type="text" class='form-input' placeholder="<?= label('friends_code', 'Friends code') ?>" id="friends_code"
                         name="friends_code">
                 </div>
                 <div class="col-12 d-flex justify-content-center pb-4">
@@ -437,9 +437,9 @@
             </footer>
         </form>
         <form id='sign-up-form' class='sign-up-form collapse' action='#'>
-            <input type="text" placeholder="Username" name='username' class='form-input' required>
-            <input type="text" placeholder="email" name='email' class='form-input' required>
-            <input type="password" placeholder="Password" name='password' class='form-input' required>
+            <input type="text" placeholder="<?= label('username', 'Username') ?>" name='username' class='form-input' required>
+            <input type="text" placeholder="<?= label('email', 'Email') ?>" name='email' class='form-input' required>
+            <input type="password" placeholder="<?= label('password', 'Password') ?>" name='password' class='form-input' required>
             <div id='sign-up-error' class='text-center p-3'></div>
             <footer>
                 <button type="button"
@@ -459,7 +459,7 @@
 
             <div class="input-group">
                 <input type="text" class="form-control" name="mobile_number" id="forgot_password_number"
-                    placeholder="Mobile number" value="">
+                    placeholder="<?= label('mobile_number', 'Mobile number') ?>" value="">
             </div>
             <div class="col-12 d-flex justify-content-center pb-4 mt-3">
                 <div id="recaptcha-container-2"></div>
@@ -473,8 +473,7 @@
             <br>
             <!-- Email forgot password option -->
             <div class="text-center mt-2">
-                <a href="#" id="forgot-password-email-link" class="text-decoration-underline">Forgot password via
-                    Email?</a>
+                <a href="#" id="forgot-password-email-link" class="text-decoration-underline"><?= label('forgot_password_with_email', 'Forgot password with Email?') ?></a>
             </div>
         </form>
 
@@ -482,27 +481,27 @@
         <form id="forgot-password-email-form" class="d-none" method="post" action="#">
             <div class="input-group">
                 <input type="email" class="form-control" name="email" id="forgot_password_email"
-                    placeholder="Enter your email address" required>
+                    placeholder="<?= label('enter_your_email_address', 'Enter your email address') ?>" required>
             </div>
             <div id="forgot_pass_email_error_box" class="text-center p-2"></div>
             <footer>
                 <button type="button"
                     data-iziModal-close><?= !empty($this->lang->line('cancel')) ? $this->lang->line('cancel') : 'Cancel' ?></button>
                 <button type="submit" id="send_firebase_reset_email_btn"
-                    class="submit_btn btn btn-primary btn-block">Send Reset Email</button>
+                    class="submit_btn btn btn-primary btn-block"><?= label('send_reset_email', 'Send Reset Email') ?></button>
             </footer>
             <div id="forgot-password-phone-div" class="text-center mt-2 d-none">
-                <a href="#" id="forgot-password-phone" class="text-decoration-underline">Forgot password via Phone?</a>
+                <a href="#" id="forgot-password-phone" class="text-decoration-underline"><?= label('forgot_password_with_phone', 'Forgot password with Phone Number?') ?></a>
             </div>
             <br>
         </form>
         <form id="verify_forgot_password_otp_form" class="d-none" method="post" action="#">
             <div class="input-group">
-                <input type="text" id="forgot_password_otp" class="form-control" name="otp" placeholder="OTP" value=""
+                <input type="text" id="forgot_password_otp" class="form-control" name="otp" placeholder="<?= label('otp', 'OTP') ?>" value=""
                     autocomplete="off" required>
             </div>
             <div class="input-group">
-                <input type="password" class="form-control" name="new_password" placeholder="New Password" value=""
+                <input type="password" class="form-control" name="new_password" placeholder="<?= label('new_password', 'New Password') ?>" value=""
                     required>
             </div>
             <footer>
@@ -517,17 +516,17 @@
 
     <!-- Password Reset Form -->
     <section class="hide pt-0" id="resetForm" style="display: none;">
-        <div class="text-center h5">Reset Password</div>
+        <div class="text-center h5"><?= label('reset_password', 'Reset Password') ?></div>
         <hr class="mt-0">
         <form method="post" action="#">
             <div class="input-group">
                 <input type="password" class="form-control" id="newPassword" name="new_password"
-                    placeholder="Enter new password" required>
+                    placeholder="<?= label('enter_new_password', 'Enter new password') ?>" required>
             </div>
             <footer>
                 <button type="button"
                     data-iziModal-close><?= !empty($this->lang->line('cancel')) ? $this->lang->line('cancel') : 'Cancel' ?></button>
-                <button type="submit" class="submit_btn btn btn-primary btn-block">Reset Password</button>
+                <button type="submit" class="submit_btn btn btn-primary btn-block"><?= label('reset_password', 'Reset Password') ?></button>
             </footer>
             <br>
         </form>
@@ -535,7 +534,7 @@
 
     <!-- Login text section -->
     <section id="login-text" class="text-center">
-        <p>Please log in or register to continue.</p>
+        <p><?= label('please_log_in_or_register', 'Please log in or register to continue.') ?></p>
     </section>
 </div>
 <!-- quick view -->
@@ -569,7 +568,7 @@
             <div class="mb-3 product-rating-small">
                 <input type="text" class="kv-fa rating rating-loading" id="modal-product-rating" value="0"
                     data-show-caption="false" data-size="sm" data-show-clear="false" title="" readonly>
-                (<span class="rating-status" id="modal-product-no-of-ratings">1203</span> reviews )
+                (<span class="rating-status" id="modal-product-no-of-ratings">1203</span> <?= label('reviews', 'Reviews') ?> )
             </div>
             <p class="mb-0 price">
                 <span id="modal-product-price"></span>
@@ -591,7 +590,7 @@
             <div class="pt-4 pb-4 text-center text-md-left">
                 <div class="button button-sm m-0 p-0 mt-2">
                     <button type="button" name="compare" class="buttons btn-6-6 extra-small m-0 compare" id="compare"><i
-                            class="fa fa-random"></i> Compare</button>
+                            class="fa fa-random"></i> <?= label('compare', 'Compare') ?></button>
                 </div>
                 <div class="button button-sm m-0 p-0 mt-2">
                     <button class="buttons primary-button m-0 add_to_cart" id="modal-add-to-cart-button"><i
@@ -629,7 +628,7 @@
 <?php if (IS_ALLOWED_MODIFICATION == 0) { ?>
     <div class="buy-now-btn">
         <a href="https://codecanyon.net/item/eshop-multipurpose-ecommercestore-website/31071809" target="_blank"
-            class="btn btn-danger"> <i class="fa fa-shopping-cart"></i> Buy Now</a>
+            class="btn btn-danger"> <i class="fa fa-shopping-cart"></i> <?= !empty($this->lang->line('buy_now')) ? $this->lang->line('buy_now') : 'Buy Now' ?></a>
     </div>
 <?php }
 if ($this->ion_auth->logged_in()) {

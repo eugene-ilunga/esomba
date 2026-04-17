@@ -153,7 +153,7 @@
                                             class="text-reset text-decoration-none">
                                             <div class="card card-h-418 product-card h-100" data-product-id="<?= $product_row['id'] ?>">
                                                 <div class="product-icon-spacebtw">
-                                                    <div class="add-to-fav-btn" title="like"
+                                                    <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>"
                                                         data-product-id="<?= isset($product_row['id']) ? $product_row['id'] : '' ?>">
                                                         <ion-icon
                                                             class="ion-icon ion-icon-hover <?= (isset($product_row['is_favorite']) && $product_row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>"
@@ -278,7 +278,7 @@
                                                     ?>
 
 
-                                                    <a href="#" data-tip="Add to Cart"
+                                                    <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>"
                                                         class="btn add-in-cart-btn add_to_cart w-100 btn-sm px-1 <?= $class_modal ?>"
                                                         data-product-id="<?= $product_row['id'] ?>"
                                                         data-product-variant-id="<?= $variant_id ?>"
@@ -297,7 +297,7 @@
                                                     <div class="product-icon-spacebtw">
                                                         <div class="shuffle-box">
                                                             <a class="compare text-reset text-decoration-none shuffle"
-                                                                data-tip="Compare" data-product-id="<?= $product_row['id'] ?>"
+                                                                data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $product_row['id'] ?>"
                                                                 data-product-variant-id="<?= $variant_id ?>">
                                                                 <ion-icon name="shuffle-outline" class="ion-icon-hover pointer shuffle">
                                                                 </ion-icon>
@@ -306,7 +306,7 @@
                                                     </div>
 
                                                     <div class="product-icon-spacebtw">
-                                                        <div class="quick-search-box quickview-trigger" data-tip="Quick View"
+                                                        <div class="quick-search-box quickview-trigger" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                             data-product-id="<?= isset($product_row['id']) ? $product_row['id'] : '' ?>"
                                                             data-product-variant-id="<?= isset($product_row['variants'][0]['id']) ? $product_row['variants'][0]['id'] : '' ?>">
                                                             <ion-icon name="search-outline" class="ion-icon-hover pointer"
@@ -377,7 +377,7 @@
 
                                                         <!-- Favorite -->
                                                         <div class="product-icon-spacebtw">
-                                                            <div class="add-to-fav-btn" title="like"
+                                                            <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>"
                                                                 data-product-id="<?= $product_row['id'] ?>">
                                                                 <ion-icon
                                                                     class="ion-icon ion-icon-hover <?= ($product_row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>"
@@ -432,7 +432,7 @@
                                                                             <?= $settings['currency'] . number_format($variant['price']) ?>
                                                                             </span>
                                                                             <span class="text-success fw-bold">
-                                                                            <?= $product_row['sale_discount'] ?>% off
+                                                                            <?= $product_row['sale_discount'] ?>% <?= label('off', 'off') ?>
                                                                             </span>
 
                                                                         <?php
@@ -444,7 +444,7 @@
                                                                             <?= $settings['currency'] . number_format($variant['price']) ?>
                                                                             </span>
                                                                             <span class="text-success fw-bold">
-                                                                            <?= $discount_percentage ?>% off
+                                                                            <?= $discount_percentage ?>% <?= label('off', 'off') ?>
                                                                             </span>
                                                                     <?php } ?>
                                                                     </small>
@@ -593,7 +593,7 @@
                                                                     data-product-id="<?= $product_row['id'] ?>">
                                                                     <div class="product-icon-spacebtw">
 
-                                                                        <div class="add-to-fav-btn" title="like"
+                                                                        <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>"
                                                                             data-product-id="<?= isset($product_row['id']) ? $product_row['id'] : '' ?>">
                                                                             <ion-icon
                                                                                 class="ion-icon ion-icon-hover <?= (isset($product_row['is_favorite']) && !empty($product_row['is_favorite']) && $product_row['is_favorite'] !== null && $product_row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>"
@@ -737,7 +737,7 @@
                                                                         <div class="product-icon-spacebtw">
                                                                             <div class="shuffle-box">
                                                                                 <a class="compare text-reset text-decoration-none shuffle"
-                                                                                    data-tip="Compare" data-product-id="<?= $product_row['id'] ?>"
+                                                                                    data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $product_row['id'] ?>"
                                                                                     data-product-variant-id="<?= $variant_id ?>">
                                                                                     <ion-icon name="shuffle-outline"
                                                                                         class="ion-icon-hover pointer shuffle"></ion-icon>
@@ -746,7 +746,7 @@
                                                                         </div>
 
                                                                         <div class="product-icon-spacebtw">
-                                                                            <div class="quick-search-box quickview-trigger" data-tip="Quick View"
+                                                                            <div class="quick-search-box quickview-trigger" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                                                 data-product-id="<?= isset($product_row['id']) ? $product_row['id'] : '' ?>"
                                                                                 data-product-variant-id="<?= (isset($product_row['variants'][0]['id']) && !empty($product_row['variants'][0]['id']) && $product_row['variants'][0]['id'] !== null) ? $product_row['variants'][0]['id'] : '' ?>">
                                                                                 <ion-icon name="search-outline" class="ion-icon-hover pointer"

@@ -1,4 +1,14 @@
-<?php $total_images = 0; ?>
+<?php
+$total_images = 0;
+$product_details_url = base_url('products/details/' . $product['product'][0]['slug']);
+$whatsapp_order_text = rawurlencode(
+    sprintf(
+        label('whatsapp_order_message', 'Hello, I have seen this %s on your website and I want to buy it: %s'),
+        $product['product'][0]['name'],
+        $product_details_url
+    )
+);
+?>
 <!-- breadcrumb -->
 <section class="breadcrumb-title-bar colored-breadcrumb">
     <div class="main-content responsive-breadcrumb">
@@ -266,9 +276,9 @@
             <?php
             $indicator = (isset($product['product'][0]['indicator']) && !empty($product['product'][0]['indicator']) ? $product['product'][0]['indicator'] : '');
             if ($indicator == '1') { ?>
-                <span class="badge badge-success">Veg</span>
+                <span class="badge badge-success"><?= label('veg', 'Veg') ?></span>
             <?php } elseif ($indicator == '2') { ?>
-                <span class="badge badge-danger">Non veg</span>
+                <span class="badge badge-danger"><?= label('non_veg', 'Non veg') ?></span>
             <?php } ?>
             <hr>
             <div class="my-3 product-title">
@@ -377,7 +387,9 @@
                         }
                     }
                     ?>
-                    <p class="mb-1 mt-1"><span class="text-muted"><small>(Inclusive of all taxes)</small></span></p>
+                    <p class="mb-1 mt-1"><span
+                            class="text-muted"><small><?= label('inclusive_of_all_taxes', '(Inclusive of all taxes)') ?></small></span>
+                    </p>
                     <h4 class="mt-2"><?= $attribute['attr_name'] ?></h4>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons" id="<?= $attribute['attr_name'] ?>">
                         <?php foreach ($attribute_values as $key => $row) {
@@ -439,16 +451,19 @@
                     <div class="form-row">
                         <div class=" col-md-6">
                             <input type="hidden" name="product_id" value="<?= $product['product'][0]['id'] ?>">
-                            <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" name="zipcode"
+                            <input type="text" class="form-control" id="zipcode"
+                                placeholder="<?= label('pincode', 'Pincode') ?>" name="zipcode"
                                 autocomplete="off" required value="<?= $product['product'][0]['zipcode']; ?>">
                         </div>
-                        <button type="submit" class="button button-primary-outline" id="validate_zipcode">Check
-                            Availability</button>
+                        <button type="submit" class="button button-primary-outline"
+                            id="validate_zipcode"><?= label('check_availability', 'Check Availability') ?></button>
                     </div>
                     <div class="mt-2" id="error_box">
                         <?php if (!empty($product['product'][0]['zipcode'])) { ?>
-                            <b class="text-<?= ($product['product'][0]['is_deliverable']) ? "success" : "danger" ?>">Product is
-                                <?= ($product['product'][0]['is_deliverable']) ? "" : "not" ?> delivarable on &quot;
+                            <b class="text-<?= ($product['product'][0]['is_deliverable']) ? "success" : "danger" ?>">
+                                <?= ($product['product'][0]['is_deliverable'])
+                                    ? label('product_is_deliverable_on', 'Product is deliverable on')
+                                    : label('product_is_not_deliverable_on', 'Product is not deliverable on') ?> &quot;
                                 <?= $product['product'][0]['zipcode']; ?> &quot; </b>
                         <?php } ?>
                     </div>
@@ -459,16 +474,19 @@
                     <div class="form-row">
                         <div class=" col-md-6">
                             <input type="hidden" name="product_id" value="<?= $product['product'][0]['id'] ?>">
-                            <input type="text" class="form-control" id="zipcode" placeholder="City" name="city"
+                            <input type="text" class="form-control" id="zipcode"
+                                placeholder="<?= label('city', 'City') ?>" name="city"
                                 autocomplete="off" required value="<?= $product['product'][0]['zipcode']; ?>">
                         </div>
-                        <button type="submit" class="button button-primary-outline" id="validate_city">Check
-                            Availability</button>
+                        <button type="submit" class="button button-primary-outline"
+                            id="validate_city"><?= label('check_availability', 'Check Availability') ?></button>
                     </div>
                     <div class="mt-2" id="error_box">
                         <?php if (!empty($product['product'][0]['zipcode'])) { ?>
-                            <b class="text-<?= ($product['product'][0]['is_deliverable']) ? "success" : "danger" ?>">Product is
-                                <?= ($product['product'][0]['is_deliverable']) ? "" : "not" ?> delivarable on &quot;
+                            <b class="text-<?= ($product['product'][0]['is_deliverable']) ? "success" : "danger" ?>">
+                                <?= ($product['product'][0]['is_deliverable'])
+                                    ? label('product_is_deliverable_on', 'Product is deliverable on')
+                                    : label('product_is_not_deliverable_on', 'Product is not deliverable on') ?> &quot;
                                 <?= $product['product'][0]['zipcode']; ?> &quot; </b>
                         <?php } ?>
                     </div>
@@ -509,7 +527,7 @@
                 ?>
                 <button type="button" name="compare" class="buttons btn-6-6 extra-small m-0 compare" id="compare"
                     data-product-id="<?= $product['product'][0]['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
-                    <i class="fa fa-random"></i> Compare
+                    <i class="fa fa-random"></i> <?= label('compare', 'Compare') ?>
                 </button>
                 <?php if ($product['product'][0]['variants'][0]['cart_count'] != 0) { ?>
                     <a class="buttons btn-6-6 extra-small m-0" href="<?= base_url('cart') ?>"><i
@@ -543,13 +561,14 @@
                         <span><?= !empty($this->lang->line('remove_from_favorite')) ? $this->lang->line('remove_from_favorite') : 'Remove from Favorite' ?></span>
                     </button>
                 <?php } ?>
-                <a href="https://api.whatsapp.com/send?phone= <?= ($settings['whatsapp_number'] != '' && isset($settings['whatsapp_number'])) ? $settings['whatsapp_number'] : ((!defined('ALLOW_MODIFICATION') && ALLOW_MODIFICATION == 0) ? str_repeat("X", strlen($settings['whatsapp_number']) - 3) . substr($settings['whatsapp_number'], -3) : $settings['whatsapp_number']) ?> &amp;text=Hello, I Seen This <?= $product['product'][0]['name'] ?> In Your Website And I Want to Buy This <?= base_url('products/details/' . $product['product'][0]['slug']) ?>"
-                    target="_blank" title="Order From Whatsapp"><button class="buttons btn-6-4 extra-small m-0"><i
+                <a href="https://api.whatsapp.com/send?phone= <?= ($settings['whatsapp_number'] != '' && isset($settings['whatsapp_number'])) ? $settings['whatsapp_number'] : ((!defined('ALLOW_MODIFICATION') && ALLOW_MODIFICATION == 0) ? str_repeat("X", strlen($settings['whatsapp_number']) - 3) . substr($settings['whatsapp_number'], -3) : $settings['whatsapp_number']) ?> &amp;text=<?= $whatsapp_order_text ?>"
+                    target="_blank" title="<?= label('order_from_whatsapp', 'Order From Whatsapp') ?>"><button
+                        class="buttons btn-6-4 extra-small m-0"><i
                             class="fa-brands fa-whatsapp mr-2"></i><?= label('order_from_whatsapp', 'Order From Whatsapp') ?></button></a>
             </div>
             <?php if (isset($product['product'][0]['tags']) && !empty($product['product'][0]['tags'])) { ?>
                 <div class="mt-2">
-                    Tags
+                    <?= label('tags', 'Tags') ?>
                     <?php foreach ($product['product'][0]['tags'] as $tag) { ?>
                         <a href="<?= base_url('products/tags/' . $tag) ?>"><span
                                 class="badge badge-secondary p-1"><?= $tag ?></span></a>
@@ -567,7 +586,7 @@
             <?php if (isset($product['product'][0]['brand']) && !empty($product['product'][0]['brand'])) { ?>
                 <div class="mt-2">
 
-                    Brand
+                    <?= label('brand', 'Brand') ?>
                     <?php
                     $brand = $product['product'][0]['brand']; ?>
 
@@ -594,7 +613,7 @@
                         aria-selected="false"><?= !empty($this->lang->line('reviews')) ? $this->lang->line('reviews') : 'Reviews' ?></a>
                     <a class="nav-item nav-link product-nav-tab" id="product-faq-tab" data-toggle="tab"
                         href="#product-faq" role="tab" aria-controls="product-faq"
-                        aria-selected="false"><?= !empty($this->lang->line('FAQs')) ? $this->lang->line('FAQs') : 'FAQs' ?></a>
+                        aria-selected="false"><?= label('faq', 'FAQ') ?></a>
                 </div>
             </nav>
             <div class="tab-content p-3 w-100" id="nav-tabContent">
@@ -647,7 +666,7 @@
                                                 <div id="<?= "c-" . $row['id'] ?>" class="collapse"
                                                     aria-labelledby="<?= "h-" . $row['id'] ?>" data-parent="#accordionExample">
                                                     <div class="card-body"><?= html_escape($row['answer']) ?></div>
-                                                    <div class="card-body">Answer by :
+                                                    <div class="card-body"><?= label('answer_by', 'Answer by') ?> :
                                                         <?= isset($product_data[0]['username']) && !empty($product_data[0]['username']) ? html_escape($product_data[0]['username']) : "" ?>
                                                     </div>
                                                 </div>
@@ -665,7 +684,9 @@
                     <?php
                     if (!empty($review_images['total_images'])) {
                         if ($review_images['total_images'] > 0) { ?>
-                            <h3 class="review-title"> User Review Images (<span><?= $review_images['total_images'] ?></span>)
+                            <h3 class="review-title">
+                                <?= label('user_review_images', 'User Review Images') ?>
+                                (<span><?= $review_images['total_images'] ?></span>)
                             </h3>
                             <?php
                         }
@@ -689,7 +710,7 @@
                                                                 alt="Review Image" data-reached-end="false" data-review-limit="1"
                                                                 data-review-offset="0"
                                                                 data-product-id="<?= $review_images['product_rating'][$i]['product_id'] ?>"
-                                                                data-review-title="User Review Images(<span><?= $review_images['total_images'] ?></span>)"
+                                                                data-review-title="<?= label('user_review_images', 'User Review Images') ?>(<span><?= $review_images['total_images'] ?></span>)"
                                                                 data-izimodal-open="#user-review-images" class="overlay">
                                                         </a>
                                                     </div>
@@ -727,8 +748,8 @@
                     <div class="row">
                         <div class="col-xl-7">
                             <h3 class="review-title"> <span
-                                    id="no_ratings"><?= $product['product'][0]['no_of_ratings'] ?></span> Reviews For
-                                this Product</h3>
+                                    id="no_ratings"><?= $product['product'][0]['no_of_ratings'] ?></span>
+                                <?= label('reviews_for_this_product', 'Reviews For this Product') ?></h3>
                             <ol class="review-list" id="review-list">
                                 <?php if (isset($my_rating) && !empty($my_rating)) {
                                     foreach ($my_rating['product_rating'] as $row) { ?>
@@ -752,7 +773,7 @@
                                                     <p class="text-muted"><?= $row['comment'] ?></p>
                                                     <a href="<?= base_url('products/delete-rating') ?>"
                                                         class="text-danger delete_rating"
-                                                        data-rating-id="<?= $row['id'] ?>">Delete</a>
+                                                        data-rating-id="<?= $row['id'] ?>"><?= label('delete', 'Delete') ?></a>
                                                 </div>
                                                 <div class="row reviews">
                                                     <?php foreach ($row['images'] as $image) { ?>
@@ -826,7 +847,7 @@
 
 
                             <div class="add-review">
-                                <h3 class="review-title">Edit Your Review</h3>
+                                <h3 class="review-title"><?= label('edit_your_review', 'Edit Your Review') ?></h3>
                                 <form action="<?= $form_link ?>" id="product-rating-form" class="form-submit-event"
                                     method="POST">
                                     <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>"
@@ -837,23 +858,23 @@
                                     <?php } ?>
                                     <input type="hidden" name="product_id" value="<?= $product['product'][0]['id'] ?>">
                                     <div class="rating-form">
-                                        <label for="rating">Your rating</label>
+                                        <label for="rating"><?= label('your_rating', 'Your Rating') ?></label>
                                         <input type="text" class="kv-fa rating-loading" data-step="1" name="rating"
                                             value="<?= isset($my_rating['product_rating'][0]['rating']) ? $my_rating['product_rating'][0]['rating'] : '0' ?>"
                                             data-size="sm" title="">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Your Review</label>
+                                        <label for="exampleFormControlTextarea1"><?= label('your_review', 'Your Review') ?></label>
                                         <textarea class="form-control" name="comment"
                                             rows="3"><?= isset($my_rating['product_rating'][0]['comment']) ? $my_rating['product_rating'][0]['comment'] : '' ?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Images</label>
+                                        <label for="exampleFormControlTextarea1"><?= label('images', 'Images') ?></label>
                                         <input type="file" name="images[]" accept="image/x-png,image/gif,image/jpeg"
                                             multiple />
                                     </div>
                                     <button class="buttons extra-small primary-button text-center m-0"
-                                        id="rating-submit-btn">Submit</button>
+                                        id="rating-submit-btn"><?= label('submit', 'Submit') ?></button>
                                 </form>
                             </div>
                         <?php } ?>
@@ -879,7 +900,7 @@
                             ?>
                             <div class="col-xl-5 <?= (!empty($my_rating)) ? 'd-none' : '' ?>" id="rating-box">
                                 <div class="add-review">
-                                    <h3 class="review-title">Add Your Review</h3>
+                                    <h3 class="review-title"><?= label('add_your_review', 'Add Your Review') ?></h3>
                                     <form action="<?= $form_link ?>" id="product-rating-form" class="form-submit-event"
                                         method="POST">
                                         <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>"
@@ -890,23 +911,23 @@
                                         <?php } ?>
                                         <input type="hidden" name="product_id" value="<?= $product['product'][0]['id'] ?>">
                                         <div class="rating-form">
-                                            <label for="rating">Your rating</label>
+                                            <label for="rating"><?= label('your_rating', 'Your Rating') ?></label>
                                             <input type="text" class="kv-fa rating-loading" data-step="1" name="rating"
                                                 value="<?= isset($my_rating['product_rating'][0]['rating']) ? $my_rating['product_rating'][0]['rating'] : '0' ?>"
                                                 data-size="sm" title="">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleFormControlTextarea1">Your Review</label>
+                                            <label for="exampleFormControlTextarea1"><?= label('your_review', 'Your Review') ?></label>
                                             <textarea class="form-control" name="comment"
                                                 rows="3"><?= isset($my_rating['product_rating'][0]['comment']) ? $my_rating['product_rating'][0]['comment'] : '' ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleFormControlTextarea1">Images</label>
+                                            <label for="exampleFormControlTextarea1"><?= label('images', 'Images') ?></label>
                                             <input type="file" name="images[]" accept="image/x-png,image/gif,image/jpeg"
                                                 multiple />
                                         </div>
                                         <button class="buttons extra-small primary-button text-center m-0"
-                                            id="rating-submit-btn">Submit</button>
+                                            id="rating-submit-btn"><?= label('submit', 'Submit') ?></button>
                                     </form>
                                 </div>
                             </div>
@@ -916,8 +937,7 @@
                                 <div class="text-center">
                                     <button class="buttons btn-6-6" id="load-user-ratings"
                                         data-product="<?= $product['product'][0]['id'] ?>"
-                                        data-limit="<?= $user_rating_limit ?>" data-offset="<?= $user_rating_offset ?>">Load
-                                        more</button>
+                                        data-limit="<?= $user_rating_limit ?>" data-offset="<?= $user_rating_offset ?>"><?= label('load_more', 'Load more') ?></button>
                                 </div>
                             </div>
                         <?php } ?>
@@ -953,7 +973,8 @@
 
                                 <ul class="social">
                                     <li>
-                                        <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                        <a href="#" class="quick-view-btn"
+                                            data-tip="<?= label('quick_view', 'Quick View') ?>"
                                             data-product-id="<?= $row['id'] ?>"
                                             data-product-variant-id="<?= $row['variants'][0]['id'] ?>"
                                             data-izimodal-open="#quick-view">
@@ -980,7 +1001,8 @@
                                         $data_step = (isset($row['minimum_order_quantity']) && !empty($row['quantity_step_size'])) ? $row['quantity_step_size'] : 1;
                                         $data_max = (isset($row['total_allowed_quantity']) && !empty($row['total_allowed_quantity'])) ? $row['total_allowed_quantity'] : 0;
                                         ?>
-                                        <a href="" data-tip="Add to Cart" class="add_to_cart"
+                                        <a href="" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>"
+                                            class="add_to_cart"
                                             data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>"
                                             data-product-title="<?= $row['name'] ?>"
                                             data-product-image="<?= $row['image'] ?>"
@@ -994,7 +1016,8 @@
                                     <li>
                                         <?php $variant_id = (count($row['variants']) <= 1) ? $row['variants'][0]['id'] : ""; ?>
 
-                                        <a href="#" class="compare" data-tip="Compare" data-product-id="<?= $row['id'] ?>"
+                                        <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>"
+                                            data-product-id="<?= $row['id'] ?>"
                                             data-product-variant-id="<?= $variant_id ?>">
                                             <i class="fa fa-random"></i>
                                         </a>
@@ -1081,11 +1104,12 @@
                             value="<?php echo $this->security->get_csrf_hash(); ?>" />
                         <input type="hidden" name="user_id" value="<?= $_SESSION['user_id']; ?>">
                         <input type="hidden" name="product_id" value="<?= $product['product'][0]['id'] ?>">
-                        <input type="text" class="form-control" id="question" placeholder="Enter Your Question Here"
+                        <input type="text" class="form-control" id="question"
+                            placeholder="<?= label('enter_your_question_here', 'Enter Your Question Here') ?>"
                             name="question">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm" id="add-faqs" name="add-faqs" value="Save">Add
-                        FAQ</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="add-faqs" name="add-faqs"
+                        value="Save"><?= label('add_faq', 'Add FAQ') ?></button>
                     <div class="mt-3">
                         <div id="add_faqs_result"></div>
                     </div>

@@ -65,7 +65,7 @@ if (!empty($is_app)) {
                     class="me-3v pointer brand-logo-link">
             </a>
             <form class="searchcontainer mx-5 searchbar">
-                <select class=" me-2 search_product opacity-0" type="text" aria-label="Search">search</select>
+                <select class=" me-2 search_product opacity-0" type="text" aria-label="<?= label('search', 'Search') ?>"><?= label('search', 'Search') ?></select>
             </form>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -75,15 +75,15 @@ if (!empty($is_app)) {
             <div class="collapse navbar-collapse fw-semibold " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-around width100 white-space-nowrap">
                     <li class="nav-item">
-                        <a class="nav-link font-color" title="Support" aria-current="page"
+                        <a class="nav-link font-color" title="<?= label('support', 'Support') ?>" aria-current="page"
                             href="<?= base_url('home/contact-us') ?>"><?= label('support', 'Support') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-color" title="About Us"
+                        <a class="nav-link font-color" title="<?= label('about_us', 'About Us') ?>"
                             href="<?= base_url('home/about-us') ?>"><?= label('about_us', 'About Us') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link font-color" title="FAQs"
+                        <a class="nav-link font-color" title="<?= label('faq', 'FAQs') ?>"
                             href="<?= base_url('home/faq') ?>"><?= label('faq', 'FAQs') ?></a>
                     </li>
                 </ul>
@@ -98,36 +98,36 @@ if (!empty($is_app)) {
             <ul class="navbar-nav flexrow white-space-nowrap">
                 <li class="nav-category pointer <?= ($current_url == base_url()) ? ' active-nav' : '' ?>">
                     <a href="<?= base_url() ?>">
-                        <span title="Home"><?= label('home', 'Home') ?></span>
+                        <span title="<?= label('home', 'Home') ?>"><?= label('home', 'Home') ?></span>
                     </a>
                 </li>
                 <li class="nav-category pointer <?= ($current_url == base_url('home/categories')) ? ' active-nav' : '' ?>"
-                    title="All Categories">
+                    title="<?= label('all_categories', 'All Categories') ?>">
                     <a href="<?= base_url('home/categories') ?>">
-                        <span><?= label('category', 'All Categories') ?></span>
+                        <span><?= label('all_categories', 'All Categories') ?></span>
                     </a>
                 </li>
                 <li class="nav-category pointer <?= ($current_url == base_url('products')) ? ' active-nav' : '' ?>">
                     <a href="<?= base_url('products') ?>">
-                        <span title="Products"><?= label("products", "Products") ?></span>
+                        <span title="<?= label('products', 'Products') ?>"><?= label("products", "Products") ?></span>
                     </a>
                 </li>
                 <li
                     class="nav-category pointer <?= ($current_url == base_url('products/offers_and_flash_sale')) ? ' active-nav' : '' ?>">
                     <a href="<?= base_url('products/offers_and_flash_sale') ?>">
-                        <span title="Top Offers"><?= label('top_offer', 'Top Offers') ?></span>
+                        <span title="<?= label('top_offers', 'Top Offers') ?>"><?= label('top_offers', 'Top Offers') ?></span>
                     </a>
                 </li>
                 <li
                     class="nav-category pointer <?= ($current_url == base_url('home/contact-us')) ? ' active-nav' : '' ?>">
                     <a href="<?= base_url('home/contact-us') ?>">
-                        <span title="Contact us"><?= label('contact_us', 'Contact us') ?></span>
+                        <span title="<?= label('contact_us', 'Contact us') ?>"><?= label('contact_us', 'Contact us') ?></span>
                     </a>
                 </li>
                 <li
                     class="nav-category pointer <?= ($current_url == base_url('home/about-us')) ? ' active-nav' : '' ?>">
                     <a href="<?= base_url('home/about-us') ?>">
-                        <span title="About us"><?= label('about_us', 'About us') ?></span>
+                        <span title="<?= label('about_us', 'About us') ?>"><?= label('about_us', 'About us') ?></span>
                     </a>
                 </li>
             </ul>
@@ -151,7 +151,7 @@ if (!empty($is_app)) {
                 </div>
                 <ul class="d-flex align-items-center margin0 list-style">
                     <a href="<?= base_url('compare') ?>">
-                        <li class="shopingicon mx-2 pointer" title="compare">
+                        <li class="shopingicon mx-2 pointer" title="<?= label('compare', 'Compare') ?>">
                             <i class="ionicon-compare-outline bghover transition-d-025"></i>
                         </li>
                     </a>
@@ -159,7 +159,7 @@ if (!empty($is_app)) {
                     $page = $this->uri->segment(1) == 'cart' ? 'cart' : '';
                     $checkout_page = $this->uri->segment(2) == 'checkout' ? 'checkout' : ''; ?>
                     <?php if ($page == 'cart') { ?>
-                        <li class="shopingicon mx-2 pointer" title="Cart">
+                        <li class="shopingicon mx-2 pointer" title="<?= label('cart', 'Cart') ?>">
                             <a class="d-block" href="<?= base_url('cart') ?>">
                                 <i class="ionicon-bag-handle-outline bghover transition-d-025" 0></i>
                                 <span class="badge badge-danger badge-sm count-box cart-count"
@@ -167,7 +167,7 @@ if (!empty($is_app)) {
                             </a>
                         </li>
                     <?php } elseif ($checkout_page == 'checkout') { ?>
-                        <li class="shopingicon mx-2 pointer" title="Cart">
+                        <li class="shopingicon mx-2 pointer" title="<?= label('cart', 'Cart') ?>">
                             <a class="d-block" href="<?= base_url('cart/checkout') ?>">
                                 <i class="ionicon-bag-handle-outline bghover transition-d-025" 0></i>
                                 <span class="badge badge-danger badge-sm count-box cart-count"
@@ -175,7 +175,7 @@ if (!empty($is_app)) {
                             </a>
                         </li>
                     <?php } else { ?>
-                        <li class="shopingicon mx-2 pointer pt-2" title="Cart" data-bs-toggle="offcanvas"
+                        <li class="shopingicon mx-2 pointer pt-2" title="<?= label('cart', 'Cart') ?>" data-bs-toggle="offcanvas"
                             data-bs-target="#cartmodal" aria-controls="offcanvasRight">
                             <a href="javascript:void(0);" class="d-block">
                                 <i class="ionicon-bag-handle-outline bghover transition-d-025" ></i>
@@ -187,7 +187,7 @@ if (!empty($is_app)) {
                     $favorite_count = count(get_favorites($this->session->userdata('user_id')));
                     ?>
                     <a href="<?= base_url('my-account/favorites') ?>">
-                        <li class="shopingicon m-2 pointer " title="Like Product">
+                        <li class="shopingicon m-2 pointer " title="<?= label('like_product', 'Like Product') ?>">
                             <span
                                 class="badge badge-danger badge-sm count-box favorite_count"><?= $favorite_count ?></span>
                             <i class="ionicon-heart bghover transition-d-025 small-icon"></i>
@@ -197,7 +197,7 @@ if (!empty($is_app)) {
                         <div class="dropdown profile">
                             <a href="<?= base_url('my-account') ?>" class=" dropdown-toggle" id="hoverDropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <li class="shopingicon mx-2 pointer" title="Profile">
+                                <li class="shopingicon mx-2 pointer" title="<?= label('profile', 'Profile') ?>">
                                     <i class="ionicon-person bghover transition-d-025"></i>
                                 </li>
                             </a>
@@ -238,7 +238,7 @@ if (!empty($is_app)) {
                         </div>
                     <?php } else { ?>
                         <a data-bs-toggle="offcanvas" data-bs-target="#login-canvas" aria-controls="offcanvasRight">
-                            <li class="shopingicon mx-2 pointer" title="Sign up">
+                            <li class="shopingicon mx-2 pointer" title="<?= label('register', 'Sign up') ?>">
                                 <i class="ionicon-person bghover transition-d-025"></i>
                             </li>
                         </a>
@@ -249,7 +249,7 @@ if (!empty($is_app)) {
     </div>
 
     <form class="d-xl-none d-xxl-none ">
-        <input class="form-control searchbar" type="text" placeholder="Search for Product" aria-label="Search" required>
+        <input class="form-control searchbar" type="text" placeholder="<?= label('search_for_product', 'Search for Product') ?>" aria-label="Search" required>
         <button class="searchicon" type="submit">
             <i class="ionicon-search-outline"></i>
         </button>
@@ -275,7 +275,7 @@ if (!empty($is_app)) {
                     <ion-icon name="person-outline" class="menu-icon"></ion-icon>
                     <?php if ($this->ion_auth->logged_in()) { ?>
                         <a href="<?= base_url('my_account') ?>">
-                            <?= label('Hello', 'Hello') ?>     <?= $user->username ?>
+                            <?= label('hello', 'Hello') ?>     <?= $user->username ?>
                         </a>
                     <?php } else { ?>
                         <a href="<?= base_url('register') ?>">
@@ -323,7 +323,7 @@ if (!empty($is_app)) {
                         <li>
                             <a href="<?= base_url('my-account/favorites') ?>">
                                 <ion-icon name="heart-outline" class="menu-icon"></ion-icon><span
-                                    class="text-body-emphasis"><?= label('favorite', 'Favarites') ?></span>
+                                    class="text-body-emphasis"><?= label('favorite', 'Favorites') ?></span>
                             </a>
                         </li>
                     <?php } ?>
@@ -402,10 +402,10 @@ if (!empty($is_app)) {
 </header>
 <div class="container-fluid p-3 d-flex d-xl-none d-xxl-none align-items-center">
     <form class="searchcontainer w-100">
-        <select class="form-control me-2 search_product" type="text" aria-label="Search">search</select>
+        <select class="form-control me-2 search_product" type="text" aria-label="<?= label('search', 'Search') ?>"><?= label('search', 'Search') ?></select>
     </form>
     <ul class="list-unstyled mb-0">
-        <li class="shopingicon mx-2 pointer" title="Cart" data-bs-toggle="offcanvas" data-bs-target="#cartmodal"
+        <li class="shopingicon mx-2 pointer" title="<?= label('cart', 'Cart') ?>" data-bs-toggle="offcanvas" data-bs-target="#cartmodal"
             aria-controls="offcanvasRight">
             <a href="javascript:void(0);" class="d-block">
                 <i class="ionicon-bag-handle-outline bghover transition-d-025" 0></i>

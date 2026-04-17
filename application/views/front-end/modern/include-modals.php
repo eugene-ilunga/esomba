@@ -61,20 +61,20 @@
             </div>
             <div class="separator">
                 <span></span>
-                <?= label('OR', 'OR') ?>
+                <?= label('or', 'OR') ?>
                 <span></span>
             </div>
             <div class="d-flex justify-content-around my-2">
                 <a href="#" id="login-canvas-emailLogin-btn" class="emailLogin">
                     <div class="thirdparty-login">
                         <img src="<?= base_url('assets/front_end/modern/image/pictures/mail.png') ?> " alt="">
-                        <p class="m-0"><?= label('Email', 'Email') ?></p>
+                        <p class="m-0"><?= label('email', 'Email') ?></p>
                     </div>
                 </a>
                 <a href="#" id="login-canvas-phoneLogin-btn" class="phoneLogin d-none">
                     <div class="thirdparty-login">
                         <img src="<?= base_url('assets/front_end/modern/image/pictures/telephone.png') ?> " alt="">
-                        <p class="m-0"><?= label('Phone', 'Phone') ?></p>
+                        <p class="m-0"><?= label('phone', 'Phone') ?></p>
                     </div>
                 </a>
                 <?php if ((!empty($system_settings['google_login']) && $system_settings['google_login'] == 1)) { ?>
@@ -83,7 +83,7 @@
                             <div class="thirdparty-login">
                                 <img src="<?= base_url('assets/front_end/modern/image/pictures/google-logo-9825.png') ?> "
                                     alt="">
-                                <p class="m-0"><?= label('Google', 'Google') ?></p>
+                                <p class="m-0"><?= label('google', 'Google') ?></p>
                             </div>
                         </a>
                     <?php } ?>
@@ -91,7 +91,7 @@
             </div>
         </form>
         <div class="d-flex align-items-center justify-content-between mt-2">
-            <p class="m-0"><?= label('No account Yet?', 'No account Yet?') ?></p>
+            <p class="m-0"><?= label('no_account_yet', 'No account Yet?') ?></p>
             <a href="<?= base_url('register') ?>">
                 <button type="button"
                     class="btn btn btn-link"><?= label('create_new_account', 'Create New Account') ?></button>
@@ -135,7 +135,7 @@
                                     id="modal-product-rating" value="0" dir="ltr" data-size="xs" data-show-clear="false"
                                     data-show-caption="false" readonly>
                                 <p class="rating-review-text">( <span id="modal-product-no-of-ratings"></span>
-                                    <?= label('customer_review', 'Customer Review') ?>)</p>
+                                    <?= label('customer_reviews', 'Customer Reviews') ?>)</p>
                             </div>
                             <div class="quickview-pricing-section">
                                 <p class="quickview-pricing" id="modal-product-price"></p>
@@ -165,7 +165,7 @@
                                 <input type="hidden" name="whatsappNumber" id="whatsappNumber"
                                     value="<?= $settings['whatsapp_number'] ?>">
                                 <div class="d-flex flex-wrap gap-2">
-                                    <button type="submit" title="Add in Cart"
+                                    <button type="submit" title="<?= label('add_in_cart', 'Add in Cart') ?>"
                                         class="add-btn border-radius-5 btn text-nowrap "
                                         id="modal-add-to-cart-button"><?= label('add_to_cart', 'Add in Cart') ?></button>
                                     <a href="javascript:void(0);" id="whatsappButton"><button type="button"
@@ -183,7 +183,7 @@
                                 </span>
                             </div>
                             <div class="media-icons">
-                                <div class="d-flex align-items-center"><?= label('Share', 'Share') ?>: <span
+                                <div class="d-flex align-items-center"><?= label('share', 'Share') ?>: <span
                                         class="ms-1 quick_view_share" id="quick_view_share"></span></div>
                             </div>
                         </div>
@@ -234,7 +234,7 @@
                                 <div class="card-body">
                                     <?php $check_current_stock_status = validate_stock([$items['product_variant_id']], [$items['qty']]); ?>
                                     <h5 class="card-title"><?= html_escape($items['name']) ?>
-                                        <?= (isset($check_current_stock_status['error']) && $check_current_stock_status['error'] == TRUE) ? "<span class='badge badge-danger'>  Out of Stock </span>" : "" ?>
+                                        <?= (isset($check_current_stock_status['error']) && $check_current_stock_status['error'] == TRUE) ? "<span class='badge badge-danger'>" . label('out_of_stock', 'Out of Stock') . "</span>" : "" ?>
                                     </h5>
                                     <p class="card-text">
                                         <?= word_limit(output_escaping(str_replace('\r\n', '&#13;&#10;', $items['short_description']))) ?>
@@ -297,7 +297,7 @@
     <div class="offcanvas-footer">
         <?php if (isset($cart_items) && count($cart_items) != 0) { ?>
             <div class="subtotal-section">
-                <h5>Subtotal:</h5>
+                <h5><?= label('subtotal', 'Subtotal') ?>:</h5>
                 <h5 class="subtotal-amount" id="subtotal-amount">
                     <?= $settings['currency'] . ' ' . number_format($subtotal, 2) ?>
                 </h5>
@@ -307,7 +307,7 @@
             $subtotal = 0;
             ?>
             <div class="subtotal-section">
-                <h5>Subtotal:</h5>
+                <h5><?= label('subtotal', 'Subtotal') ?>:</h5>
                 <h5 class="subtotal-amount" id="subtotal-amount">
                     <?= $settings['currency'] . ' ' . number_format($subtotal, 2) ?>
                 </h5>

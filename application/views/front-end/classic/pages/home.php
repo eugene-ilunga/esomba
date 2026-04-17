@@ -61,7 +61,7 @@
                                         <img src="<?= base_url('assets/front_end/classic/images/dashboard.png') ?>">
                                     </a>
                                     <div class="cat-font-color">
-                                        <span>See All</span>
+                                        <span><?= label('see_all', 'See All') ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                                             </div>
                                             <ul class="social">
                                                 <li>
-                                                    <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                                    <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                         data-product-id="<?= $product_row['id'] ?>"
                                                         data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>"
                                                         data-izimodal-open="#quick-view">
@@ -190,7 +190,7 @@
                                                     $data_step = (isset($product_row['minimum_order_quantity']) && !empty($product_row['quantity_step_size'])) ? $product_row['quantity_step_size'] : 1;
                                                     $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                                     ?>
-                                                    <a href="#" data-tip="Add to Cart" class="add_to_cart"
+                                                    <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart"
                                                         data-product-id="<?= $product_row['id'] ?>"
                                                         data-product-variant-id="<?= $variant_id ?>"
                                                         data-product-title="<?= $product_row['name'] ?>"
@@ -210,7 +210,7 @@
                                                         $variant_id = "";
                                                     }
                                                     ?>
-                                                    <a href="#" class="compare" data-tip="Compare"
+                                                    <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>"
                                                         data-product-id="<?= $product_row['id'] ?>"
                                                         data-product-variant-id="<?= $variant_id ?>">
                                                         <i class="fa fa-random"></i>
@@ -354,7 +354,7 @@
                                                 </div>
                                                 <ul class="social">
                                                     <li>
-                                                        <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                                        <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                             data-product-id="<?= $product_row['id'] ?>"
                                                             data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>"
                                                             data-izimodal-open="#quick-view">
@@ -381,7 +381,7 @@
                                                         $data_step = (isset($product_row['minimum_order_quantity']) && !empty($product_row['quantity_step_size'])) ? $product_row['quantity_step_size'] : 1;
                                                         $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                                         ?>
-                                                        <a href="#" data-tip="Add to Cart" class="add_to_cart"
+                                                        <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart"
                                                             data-product-id="<?= $product_row['id'] ?>"
                                                             data-product-variant-id="<?= $variant_id ?>"
                                                             data-product-title="<?= $product_row['name'] ?>"
@@ -401,7 +401,7 @@
                                                             $variant_id = "";
                                                         }
                                                         ?>
-                                                        <a href="#" class="compare" data-tip="Compare"
+                                                        <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>"
                                                             data-product-id="<?= $product_row['id'] ?>"
                                                             data-product-variant-id="<?= $variant_id ?>">
                                                             <i class="fa fa-random"></i>
@@ -534,7 +534,7 @@
                                     </div>
                                     <ul class="social">
                                         <li>
-                                            <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                            <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                 data-product-id="<?= $last_product['id'] ?>"
                                                 data-product-variant-id="<?= $last_product['variants'][0]['id'] ?>"
                                                 data-izimodal-open="#quick-view">
@@ -556,7 +556,7 @@
                                         $data_step = (isset($product_row['minimum_order_quantity']) && !empty($product_row['quantity_step_size'])) ? $product_row['quantity_step_size'] : 1;
                                         $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                         ?>
-                                            <a href="#" data-tip="Add to Cart" class="add_to_cart"
+                                            <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart"
                                                 data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>"
                                                 data-product-title="<?= $product_row['name'] ?>"
                                                 data-product-image="<?= $product_row['image']; ?>"
@@ -575,14 +575,14 @@
                                                 $variant_id = "";
                                             }
                                             ?>
-                                            <a href="#" class="compare" data-tip="Compare" data-product-id="<?= $product_row['id'] ?>"
+                                            <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $product_row['id'] ?>"
                                                 data-product-variant-id="<?= $variant_id ?>">
                                                 <i class="fa fa-random"></i>
                                             </a>
                                         </li>
                                     </ul>
                                 <?php if (isset($last_product['min_max_price']['special_price']) && $last_product['min_max_price']['special_price'] != '' && $last_product['min_max_price']['special_price'] != 0 && $last_product['min_max_price']['special_price'] < $last_product['min_max_price']['min_price']) { ?>
-                                        <div class="home-badge"><span class="badge badge-pill badge-primary">Sale</span></div>
+                                        <div class="home-badge"><span class="badge badge-pill badge-primary"><?= label('sale', 'Sale') ?></span></div>
                                 <?php } ?>
                                 </div>
                                 <div class="col-md-12 mb-3 product-rating-small" dir="ltr">
@@ -662,7 +662,7 @@
                                             data-product-id="<?= $first_product['id'] ?>"></button>
                                     </aside>
                             <?php if (isset($first_product['min_max_price']['special_price']) && $first_product['min_max_price']['special_price'] != '' && $first_product['min_max_price']['special_price'] != 0 && $first_product['min_max_price']['special_price'] < $first_product['min_max_price']['min_price']) { ?>
-                                        <div class="home-badge"><span class="badge badge-pill badge-primary">Sale</span></div>
+                                        <div class="home-badge"><span class="badge badge-pill badge-primary"><?= label('sale', 'Sale') ?></span></div>
                             <?php } ?>
                                     <div class="product-image">
                                         <div class="product-image-container d-flex align-items-center justify-content-center">
@@ -674,7 +674,7 @@
                                         </div>
                                         <ul class="social">
                                             <li>
-                                                <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                                <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                     data-product-id="<?= $first_product['id'] ?>"
                                                     data-product-variant-id="<?= $first_product['variants'][0]['id'] ?>"
                                                     data-izimodal-open="#quick-view">
@@ -696,7 +696,7 @@
                                         $data_step = (isset($first_product['minimum_order_quantity']) && !empty($first_product['quantity_step_size'])) ? $first_product['quantity_step_size'] : 1;
                                         $data_max = (isset($first_product['total_allowed_quantity']) && !empty($first_product['total_allowed_quantity'])) ? $first_product['total_allowed_quantity'] : 0;
                                         ?>
-                                                <a href="#" data-tip="Add to Cart" class="add_to_cart"
+                                                <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart"
                                                     data-product-id="<?= $first_product['id'] ?>"
                                                     data-product-variant-id="<?= $variant_id ?>"
                                                     data-product-title="<?= $first_product['name'] ?>"
@@ -717,7 +717,7 @@
                                                     $variant_id = "";
                                                 }
                                                 ?>
-                                                    <a href="#" class="compare" data-tip="Compare" data-product-id="<?= $product_row['id'] ?>"
+                                                    <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $product_row['id'] ?>"
                                                         data-product-variant-id="<?= $variant_id ?>">
                                                         <i class="fa fa-random"></i>
                                                     </a>
@@ -836,7 +836,7 @@
                                                     </div>
                                                     <ul class="social">
                                                         <li>
-                                                            <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                                            <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                                 data-product-id="<?= $product_row['id'] ?>"
                                                                 data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>"
                                                                 data-izimodal-open="#quick-view">
@@ -858,7 +858,7 @@
                                                     $data_step = (isset($product_row['minimum_order_quantity']) && !empty($product_row['quantity_step_size'])) ? $product_row['quantity_step_size'] : 1;
                                                     $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                                     ?>
-                                                            <a href="#" data-tip="Add to Cart" class="add_to_cart"
+                                                            <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart"
                                                                 data-product-id="<?= $product_row['id'] ?>"
                                                                 data-product-variant-id="<?= $variant_id ?>"
                                                                 data-product-title="<?= $product_row['name'] ?>"
@@ -878,7 +878,7 @@
                                                             $variant_id = "";
                                                         }
                                                         ?>
-                                                            <a href="#" class="compare" data-tip="Compare"
+                                                            <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>"
                                                                 data-product-id="<?= $product_row['id'] ?>"
                                                                 data-product-variant-id="<?= $variant_id ?>">
                                                                 <i class="fa fa-random"></i>
@@ -984,7 +984,7 @@
                                                     </div>
                                                     <ul class="social">
                                                         <li>
-                                                            <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                                            <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                                 data-product-id="<?= $product_row['id'] ?>"
                                                                 data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>"
                                                                 data-izimodal-open="#quick-view">
@@ -1006,7 +1006,7 @@
                                                 $data_step = (isset($product_row['minimum_order_quantity']) && !empty($product_row['quantity_step_size'])) ? $product_row['quantity_step_size'] : 1;
                                                 $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                                 ?>
-                                                            <a href="#" data-tip="Add to Cart" class="add_to_cart"
+                                                            <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart"
                                                                 data-product-id="<?= $product_row['id'] ?>"
                                                                 data-product-variant-id="<?= $variant_id ?>"
                                                                 data-product-title="<?= $product_row['name'] ?>"
@@ -1026,7 +1026,7 @@
                                                         $variant_id = "";
                                                     }
                                                     ?>
-                                                            <a href="#" class="compare" data-tip="Compare"
+                                                            <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>"
                                                                 data-product-id="<?= $product_row['id'] ?>"
                                                                 data-product-variant-id="<?= $variant_id ?>">
                                                                 <i class="fa fa-random"></i>
@@ -1196,7 +1196,7 @@
                                                         </div>
                                                         <ul class="social">
                                                             <li>
-                                                                <a href="#" class="quick-view-btn" data-tip="Quick View"
+                                                                <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                                     data-product-id="<?= $product_row['id'] ?>"
                                                                     data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>"
                                                                     data-izimodal-open="#quick-view">
@@ -1218,7 +1218,7 @@
                                                 $data_step = (isset($product_row['minimum_order_quantity']) && !empty($product_row['quantity_step_size'])) ? $product_row['quantity_step_size'] : 1;
                                                 $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                                 ?>
-                                                                <a href="#" data-tip="Add to Cart" class="add_to_cart"
+                                                                <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart"
                                                                     data-product-id="<?= $product_row['id'] ?>"
                                                                     data-product-variant-id="<?= $variant_id ?>"
                                                                     data-product-title="<?= $product_row['name'] ?>"
@@ -1238,7 +1238,7 @@
                                                         $variant_id = "";
                                                     }
                                                     ?>
-                                                                <a href="#" class="compare" data-tip="Compare"
+                                                                <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>"
                                                                     data-product-id="<?= $product_row['id'] ?>"
                                                                     data-product-variant-id="<?= $variant_id ?>">
                                                                     <i class="fa fa-random"></i>

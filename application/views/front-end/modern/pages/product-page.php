@@ -1,4 +1,14 @@
-<?php $total_images = 0; ?>
+<?php
+$total_images = 0;
+$product_details_url = base_url('products/details/' . $product['product'][0]['slug']);
+$whatsapp_order_text = rawurlencode(
+    sprintf(
+        label('whatsapp_order_message', 'Hello, I have seen this %s on your website and I want to buy it: %s'),
+        $product['product'][0]['name'],
+        $product_details_url
+    )
+);
+?>
 <main>
     <section class="container py-4">
         <div class="Product-Detail-card row">
@@ -225,7 +235,8 @@
                         <input id="input-3-ltr-star-md" name="input-3-ltr-star-md"
                             class="kv-ltr-theme-svg-star rating-loading" value="<?= $product['product'][0]['rating'] ?>"
                             dir="ltr" data-size="xs" data-show-clear="false" data-show-caption="false" readonly>
-                        <span class="ms-2"><small>( <?= $product['product'][0]['no_of_ratings'] ?> Reviews)
+                        <span class="ms-2"><small>( <?= $product['product'][0]['no_of_ratings'] ?>
+                                <?= label('reviews', 'Reviews') ?>)
                             </small></span>
                     </div>
                 <?php } ?>
@@ -376,9 +387,9 @@
                 <?php
                 $indicator = (isset($product['product'][0]['indicator']) && !empty($product['product'][0]['indicator']) ? $product['product'][0]['indicator'] : '');
                 if ($indicator == '1') { ?>
-                    <span class="text-success">Veg</span>
+                    <span class="text-success"><?= label('veg', 'Veg') ?></span>
                 <?php } elseif ($indicator == '2') { ?>
-                    <span class="text-danger">Non veg</span>
+                    <span class="text-danger"><?= label('non_veg', 'Non veg') ?></span>
                 <?php } ?>
             </div>
 
@@ -396,7 +407,8 @@
                             $variant_id = "";
                         }
                         ?>
-                        <a class="btn d-flex p-0 compare text-reset text-decoration-none shuffle" data-tip="Compare"
+                        <a class="btn d-flex p-0 compare text-reset text-decoration-none shuffle"
+                            data-tip="<?= label('compare', 'Compare') ?>"
                             data-product-id="<?= $product['product'][0]['id'] ?>"
                             data-product-variant-id="<?= $variant_id ?>">
                             <img src="<?= base_url("assets/front_end/modern/image/icons/shuffle.png") ?>" alt="">
@@ -440,7 +452,9 @@
                         <div class="mt-2" id="error_box">
                             <?php if (!empty($product['product'][0]['zipcode'])) { ?>
                                 <p class="m-0 text-<?= ($product['product'][0]['is_deliverable']) ? "success" : "danger" ?>">
-                                    Product is <?= ($product['product'][0]['is_deliverable']) ? "" : "not" ?> delivarable on
+                                    <?= ($product['product'][0]['is_deliverable'])
+                                        ? label('product_is_deliverable_on', 'Product is deliverable on')
+                                        : label('product_is_not_deliverable_on', 'Product is not deliverable on') ?>
                                     &quot; <?= $product['product'][0]['zipcode']; ?> &quot; </p>
                             <?php } ?>
                         </div>
@@ -451,7 +465,8 @@
                         <div class="d-flex flex-wrap gap-2 form-row">
                             <div class=" col-md-6">
                                 <input type="hidden" name="product_id" value="<?= $product['product'][0]['id'] ?>">
-                                <input type="text" class="form-control" id="zipcode" placeholder="City" name="city"
+                                <input type="text" class="form-control" id="zipcode"
+                                    placeholder="<?= label('city', 'City') ?>" name="city"
                                     autocomplete="off" required value="<?= $product['product'][0]['zipcode']; ?>">
                             </div>
                             <button type="submit" class="btn btn-primary"
@@ -460,7 +475,9 @@
                         <div class="mt-2" id="error_box">
                             <?php if (!empty($product['product'][0]['zipcode'])) { ?>
                                 <p class="m-0 text-<?= ($product['product'][0]['is_deliverable']) ? "success" : "danger" ?>">
-                                    Product is <?= ($product['product'][0]['is_deliverable']) ? "" : "not" ?> delivarable on
+                                    <?= ($product['product'][0]['is_deliverable'])
+                                        ? label('product_is_deliverable_on', 'Product is deliverable on')
+                                        : label('product_is_not_deliverable_on', 'Product is not deliverable on') ?>
                                     &quot; <?= $product['product'][0]['zipcode']; ?> &quot; </p>
                             <?php } ?>
                         </div>
@@ -500,12 +517,14 @@
                     // echo "<pre>";
                     // print_r($variant);
                     if ($product['product'][0]['variants'][0]['cart_count'] != 0) { ?>
-                        <a class="buttons btn-6-6 extra-small m-0"><button type="submit" title="Add in Cart"
+                        <a class="buttons btn-6-6 extra-small m-0"><button type="submit"
+                                title="<?= label('add_in_cart', 'Add in Cart') ?>"
                                 class="col-md-12 btn add-btn"><?= label('add_in_cart', 'Add in Cart') ?></button></a>
                     <?php } else { ?>
                         <a href="#" class="">
                             <button type="button" name="add_cart" class="add_to_cart btn btn-primary" id="add_cart"
-                                title="Add in Cart" data-product-id="<?= $product['product'][0]['id'] ?>"
+                                title="<?= label('add_in_cart', 'Add in Cart') ?>"
+                                data-product-id="<?= $product['product'][0]['id'] ?>"
                                 data-product-title="<?= $product['product'][0]['name'] ?>"
                                 data-product-image="<?= $product['product'][0]['image'] ?>"
                                 data-product-price="<?= $variant['special_price']; ?>"
@@ -518,7 +537,8 @@
                             </button>
                         </a>
                         <a href="<?= base_url("cart") ?>" name="buy_it_now" class="add_to_cart btn btn-success buy_now"
-                            id="buy_it_now" title="Buy it now" data-product-id="<?= $product['product'][0]['id'] ?>"
+                            id="buy_it_now" title="<?= label('buy_it_now', 'Buy It Now') ?>"
+                            data-product-id="<?= $product['product'][0]['id'] ?>"
                             data-product-title="<?= $product['product'][0]['name'] ?>"
                             data-product-image="<?= $product['product'][0]['image'] ?>"
                             data-product-price="<?= $variant['special_price']; ?>"
@@ -530,8 +550,9 @@
                             <?= label('buy_it_now', 'Buy It Now') ?>
                         </a>
                     <?php } ?>
-                    <a href="https://api.whatsapp.com/send?phone= <?= ($settings['whatsapp_number'] != '' && isset($settings['whatsapp_number'])) ? $settings['whatsapp_number'] : ((!defined('ALLOW_MODIFICATION') && ALLOW_MODIFICATION == 0) ? str_repeat("X", strlen($settings['whatsapp_number']) - 3) . substr($settings['whatsapp_number'], -3) : $settings['whatsapp_number']) ?> &amp;text=Hello, I Seen This <?= $product['product'][0]['name'] ?> In Your Website And I Want to Buy This <?= base_url('products/details/' . $product['product'][0]['slug']) ?>"
-                        target="_blank" title="Order From Whatsapp"><button type="button"
+                    <a href="https://api.whatsapp.com/send?phone= <?= ($settings['whatsapp_number'] != '' && isset($settings['whatsapp_number'])) ? $settings['whatsapp_number'] : ((!defined('ALLOW_MODIFICATION') && ALLOW_MODIFICATION == 0) ? str_repeat("X", strlen($settings['whatsapp_number']) - 3) . substr($settings['whatsapp_number'], -3) : $settings['whatsapp_number']) ?> &amp;text=<?= $whatsapp_order_text ?>"
+                        target="_blank" title="<?= label('order_from_whatsapp', 'Order From Whatsapp') ?>"><button
+                            type="button"
                             class="btn whatsapp d-flex justify-content-center align-items-center"><ion-icon
                                 name="logo-whatsapp"
                                 class="me-2 fs-4"></ion-icon><?= label('order_from_whatsapp', 'Order From Whatsapp') ?></button></a>
@@ -696,7 +717,9 @@
                     <?php
                     if (!empty($review_images['total_images'])) {
                         if ($review_images['total_images'] > 0) { ?>
-                            <h3 class="review-title"> User Review Images (<span><?= $review_images['total_images'] ?></span>)
+                            <h3 class="review-title">
+                                <?= label('user_review_images', 'User Review Images') ?>
+                                (<span><?= $review_images['total_images'] ?></span>)
                             </h3>
                             <?php
                         }
@@ -740,7 +763,7 @@
                                                 data-show-clear="false" data-show-caption="false" readonly>
                                             <small><span
                                                     id="no_ratings"><?= $product['product'][0]['no_of_ratings'] ?></span>
-                                                Reviews</small>
+                                                <?= label('reviews', 'Reviews') ?></small>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <input id="input-3-ltr-star-md" name="input-3-ltr-star-md"
@@ -852,7 +875,9 @@
                                         <h5 class="rating-title fw-semibold default-cursor mb-4">
                                             <?= label('write_your_review', 'Write Your Review') ?>
                                         </h5>
-                                        <textarea name="comment" placeholder="Write Your Review Here" class="form-control"
+                                        <textarea name="comment"
+                                            placeholder="<?= label('write_your_review_here', 'Write Your Review Here') ?>"
+                                            class="form-control"
                                             rows="5"><?= isset($my_rating['product_rating'][0]['comment']) ? $my_rating['product_rating'][0]['comment'] : '' ?></textarea>
                                     </div>
                                     <div class="review-textarea py-2">
@@ -904,7 +929,9 @@
                                         <h5 class="rating-title fw-semibold default-cursor mb-4">
                                             <?= label('your_review', 'Your Review') ?>
                                         </h5>
-                                        <textarea name="comment" placeholder="Write Your Review Here" class="form-control"
+                                        <textarea name="comment"
+                                            placeholder="<?= label('write_your_review_here', 'Write Your Review Here') ?>"
+                                            class="form-control"
                                             rows="5"><?= isset($my_rating['product_rating'][0]['comment']) ? $my_rating['product_rating'][0]['comment'] : '' ?></textarea>
                                         <div class="review-textarea py-2">
                                             <h5 class="rating-title fw-semibold default-cursor mb-4">
@@ -1014,8 +1041,8 @@
                                             <div class="add-faqs-form float-right">
                                                 <button class="btn btn-primary border-radius-10 btn-xs mt-2"
                                                     data-bs-toggle="modal" data-bs-target="#add-faqs-form"><i
-                                                        class="uil uil-plus" aria-hidden="true"></i> &nbsp;Add your question
-                                                    here</button>
+                                                        class="uil uil-plus" aria-hidden="true"></i>
+                                                    &nbsp;<?= label('add_your_question_here', 'Add your question here') ?></button>
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -1024,7 +1051,7 @@
                                             <div class="modal-content">
                                                 <!-- Modal Header -->
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Add Faq</h4>
+                                                    <h4 class="modal-title"><?= label('add_faq', 'Add FAQ') ?></h4>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -1040,11 +1067,13 @@
                                                             <input type="hidden" name="product_id"
                                                                 value="<?= $product['product'][0]['id'] ?>">
                                                             <input type="text" class="form-control" id="question"
-                                                                placeholder="Enter Your Question Here" name="question">
+                                                                placeholder="<?= label('enter_your_question_here', 'Enter Your Question Here') ?>"
+                                                                name="question">
                                                         </div>
                                                         <button type="submit"
                                                             class="btn btn-primary btn-sm border-radius-10 mt-2"
-                                                            name="add-faqs" value="Save">Add Question</button>
+                                                            name="add-faqs"
+                                                            value="Save"><?= label('add_question', 'Add Question') ?></button>
                                                         <div class="mt-3">
                                                             <div id="add_faqs_result"></div>
                                                         </div>
@@ -1078,7 +1107,7 @@
                                                             <?= html_escape($row['question']) ?>
 
                                                             <small class="text-muted ms-2">
-                                                                (<?= !empty($this->lang->line('asked_by')) ? $this->lang->line('asked_by') : 'Asked by' ?>
+                                                                (<?= label('asked_by', 'Asked by') ?>
                                                                 <?= html_escape($row['username']) ?>)
                                                             </small>
 
@@ -1092,7 +1121,7 @@
                                                         <div class="card-body">
                                                             <p class="mb-1"><?= html_escape($row['answer']) ?></p>
                                                             <p class="text-dark m-0">
-                                                                <?= !empty($this->lang->line('answer_by')) ? $this->lang->line('answer_by') : 'Answer by' ?>
+                                                                <?= label('answer_by', 'Answer by') ?>
                                                                 :
                                                                 <?= isset($product_data[0]['username']) && !empty($product_data[0]['username']) ? html_escape($product_data[0]['username']) : "" ?>
                                                             </p>
@@ -1193,7 +1222,8 @@
                                             <div class="product-icon-spacebtw">
                                                 <div class="shuffle-box">
                                                     <a class="compare text-reset text-decoration-none shuffle"
-                                                        data-tip="Compare" data-product-id="<?= $row['id'] ?>"
+                                                        data-tip="<?= label('compare', 'Compare') ?>"
+                                                        data-product-id="<?= $row['id'] ?>"
                                                         data-product-variant-id="<?= $variant_id ?>">
                                                         <ion-icon name="shuffle-outline"
                                                             class="ion-icon-hover pointer shuffle"></ion-icon>
@@ -1202,7 +1232,8 @@
                                             </div>
 
                                             <div class="product-icon-spacebtw">
-                                                <div class="quick-search-box quickview-trigger" data-tip="Quick View"
+                                                <div class="quick-search-box quickview-trigger"
+                                                    data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                     data-product-id="<?= $row['id'] ?>"
                                                     data-product-variant-id="<?= $row['variants'][0]['id'] ?>">
                                                     <ion-icon name="search-outline" class="ion-icon-hover pointer"

@@ -169,7 +169,7 @@
                 <a href="<?= base_url() ?>">
                     <span><?= output_escaping(str_replace('\r\n', '&#13;&#10;', $web_settings['copyright_details'])) ?></span>
                 </a><?php else: ?>
-                <span>Copyright &copy; <?= date('Y') - 1 ?> - <?= date('Y') ?>, All Rights Reserved <a target="_blank"
+                <span>Copyright &copy; <?= date('Y') - 1 ?> - <?= date('Y') ?>, <?= label('all_rights_reserved', 'All Rights Reserved') ?> <a target="_blank"
                         href="<?= base_url() ?>"><?= base_url() ?></a></span>
             <?php endif; ?>
         </div>
@@ -189,11 +189,11 @@
     <!-- color switcher -->
     <div id="colors-switcher">
         <div>
-            <h6>Pick Your Theme</h6>
+            <h6><?= label('pick_your_theme', 'Pick Your Theme') ?></h6>
             <ul class="px-2 text-center">
                 <li class="list-item-inline mb-3">
                     <a class="text-decoration-none text-dark" href="<?= base_url("themes/switch/modern") ?>">
-                        <p class="m-0">Modern Theme</p>
+                        <p class="m-0"><?= label('modern_theme', 'Modern Theme') ?></p>
                         <img src="<?= base_url("assets/front_end/modern/preview-image/modern.jpg") ?>" alt="Modern image"
                             class="w-75">
 
@@ -201,7 +201,7 @@
                 </li>
                 <li class="list-item-inline mb-3">
                     <a class="text-decoration-none text-dark" href="<?= base_url("themes/switch/classic") ?>">
-                        <p class="m-0">Classic Theme</p>
+                        <p class="m-0"><?= label('classic_theme', 'Classic Theme') ?></p>
                         <img src="<?= base_url("assets/front_end/modern/image/classic-theme.png.jpg") ?>"
                             alt="classic image" class="w-75">
                     </a>
