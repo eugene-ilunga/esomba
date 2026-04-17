@@ -142,11 +142,11 @@ foreach ($cart as $key => $row) {
 
             <td>
                 <div class="product-removal">
-                    <i class="remove-product fas fa-trash-alt text-danger"
+                       <i class="remove-product fas fa-trash-alt text-danger"
                        name="remove_inventory"
                        id="remove_inventory"
                        data-id="<?= $row['id']; ?>"
-                       title="Remove From Cart"></i>
+                       title="<?= label('remove_from_cart', 'Remove From Cart') ?>"></i>
                 </div>
             </td>
         </tr>
@@ -158,10 +158,10 @@ foreach ($cart as $key => $row) {
 <?php if (!$has_items) { ?>
     <tr>
         <td colspan="8" class="text-center py-5">
-            <img src="<?= base_url(CART_EMPTY_IMAGE); ?>"
-                 alt="Cart Empty"
-                 style="max-width:220px;">
-            <p class="mt-3 text-muted">Your cart is empty</p>
+                <img src="<?= base_url(CART_EMPTY_IMAGE); ?>"
+                     alt="<?= label('empty_cart_message', 'Your Cart Is Empty') ?>"
+                     style="max-width:220px;">
+                <p class="mt-3 text-muted"><?= label('empty_cart_message', 'Your Cart Is Empty') ?></p>
         </td>
     </tr>
 <?php } ?>

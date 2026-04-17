@@ -58,11 +58,11 @@
                                                         $modal = "#quick-view";
                                                     }
                                                     ?>
-                                                    <li><a href="" class="quick-view-btn" data-tip="Quick View" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view"><i class="fa fa-search"></i></a></li>
-                                                    <li><a href="" data-tip="Add to Cart" class="add_to_cart" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-izimodal-open="<?= $modal ?>"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li><a href="" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view"><i class="fa fa-search"></i></a></li>
+                                                    <li><a href="" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-izimodal-open="<?= $modal ?>"><i class="fa fa-shopping-cart"></i></a></li>
                                                     <li>
-                                                        <?php $variant_id = isset($product_row['variants']) ? (count($product_row['variants']) <= 1) : ""; ?>
-                                                        <a href="#" class="compare" data-tip="Compare" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
+                                                        <?php $variant_id = isset($row['variants']) ? (count($row['variants']) <= 1 ? $row['variants'][0]['id'] : "") : ""; ?>
+                                                        <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
                                                             <i class="fa fa-random"></i>
                                                         </a>
                                                     </li>
@@ -85,8 +85,8 @@
                             } else { ?>
                                 <div class="col-lg-11 m-5">
                                     <div class="text-center">
-                                        <h1 class="h2">No Favorite Products Found.</h1>
-                                        <a href="<?= base_url('products') ?>" class="button button-rounded button-warning">Go to Shop</a>
+                                        <h1 class="h2"><?= label('no_favorite_product_message', 'No Favorite Products Found') ?>.</h1>
+                                        <a href="<?= base_url('products') ?>" class="button button-rounded button-warning"><?= label('go_to_shop', 'Go to Shop') ?></a>
                                     </div>
                                 </div>
                             <?php } ?>

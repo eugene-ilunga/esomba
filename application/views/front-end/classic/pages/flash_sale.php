@@ -50,7 +50,7 @@ foreach ($flash_sale as $count_key => $row) {
                             </div>
                             <ul class="social">
                                 <li>
-                                    <a href="#" class="quick-view-btn" data-tip="Quick View" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view">
+                                    <a href="#" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view">
                                         <i class="fa fa-search"></i>
                                     </a>
                                 </li>
@@ -70,7 +70,7 @@ foreach ($flash_sale as $count_key => $row) {
                                     $data_step = (isset($product_row['minimum_order_quantity']) && !empty($product_row['quantity_step_size'])) ? $product_row['quantity_step_size'] : 1;
                                     $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                     ?>
-                                    <a href="#" data-tip="Add to Cart" class="add_to_cart" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $product_row['name'] ?>" data-product-image="<?= $product_row['image']; ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $product_row['short_description']; ?>" data-izimodal-open="<?= $modal ?>">
+                                    <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="add_to_cart" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $product_row['name'] ?>" data-product-image="<?= $product_row['image']; ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $product_row['short_description']; ?>" data-izimodal-open="<?= $modal ?>">
                                         <i class="fa fa-shopping-cart"></i>
                                     </a>
                                 </li>
@@ -82,7 +82,7 @@ foreach ($flash_sale as $count_key => $row) {
                                         $variant_id = "";
                                     }
                                     ?>
-                                    <a href="#" class="compare" data-tip="Compare" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
+                                    <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
                                         <i class="fa fa-random"></i>
                                     </a>
                                 </li>

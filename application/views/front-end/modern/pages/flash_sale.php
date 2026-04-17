@@ -66,7 +66,7 @@ foreach ($flash_sale as $count_key => $row) {
                                                 $data_max = (isset($product_row['total_allowed_quantity']) && !empty($product_row['total_allowed_quantity'])) ? $product_row['total_allowed_quantity'] : 0;
                                                 ?>
 
-                                                <a href="#" data-tip="Add to Cart" class="btn add-in-cart-btn add_to_cart w-100  <?= $class_modal?>" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $product_row['name'] ?>" data-product-image="<?= $product_row['image']; ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $product_row['short_description']; ?>" data-bs-toggle="modal" data-bs-target="<?= $modal ?>"><span class="add-in-cart">
+                                                <a href="#" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" class="btn add-in-cart-btn add_to_cart w-100  <?= $class_modal?>" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $product_row['name'] ?>" data-product-image="<?= $product_row['image']; ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $product_row['short_description']; ?>" data-bs-toggle="modal" data-bs-target="<?= $modal ?>"><span class="add-in-cart">
                                                     <?=label('add_to_cart','Add to Cart')?></span><span class="add-in-cart-icon"><i class="fa-solid fa-cart-shopping
                                                 color-white"></i></span></a>
 
@@ -74,18 +74,18 @@ foreach ($flash_sale as $count_key => $row) {
                                             <div class="product-icon-onhover">
                                                 <div class="product-icon-spacebtw">
                                                     <div class="shuffle-box">
-                                                        <a class="compare text-reset text-decoration-none shuffle" data-tip="Compare" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
+                                                        <a class="compare text-reset text-decoration-none shuffle" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
                                                             <ion-icon name="shuffle-outline" class="ion-icon-hover pointer shuffle"></ion-icon>
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="product-icon-spacebtw">
-                                                    <div class="add-to-fav-btn" title="like" data-product-id="<?= $product_row['id'] ?>">
+                                                    <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>" data-product-id="<?= $product_row['id'] ?>">
                                                         <ion-icon class="ion-icon ion-icon-hover <?= ($product_row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>" name="<?= ($product_row['is_favorite'] == 1) ? 'heart' : 'heart-outline' ?>"></ion-icon>
                                                     </div>
                                                 </div>
                                                 <div class="product-icon-spacebtw">
-                                                    <div class="quick-search-box quickview-trigger" data-tip="Quick View" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>">
+                                                    <div class="quick-search-box quickview-trigger" data-tip="<?= label('quick_view', 'Quick View') ?>" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>">
                                                         <ion-icon name="search-outline" class="ion-icon-hover pointer" data-bs-toggle="modal" data-bs-target="#quickview"></ion-icon>
                                                     </div>
                                                 </div>

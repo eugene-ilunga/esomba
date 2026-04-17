@@ -91,12 +91,12 @@
                    <div class="text-center">
     <button type="button"
             class="button button-rounded button-warning product_filter_btn">
-        Filter
+        <?= label('filter', 'Filter') ?>
     </button>
 
     <button type="button"
             class="button button-rounded button-secondary product_reset_btn ms-2">
-        Reset
+        <?= label('reset', 'Reset') ?>
     </button>
 </div>
                 </div>
@@ -204,21 +204,21 @@
                                                             $data_step = (isset($row['quantity_step_size']) && !empty($row['quantity_step_size'])) ? $row['quantity_step_size'] : 1;
                                                             $data_max = (isset($row['total_allowed_quantity']) && !empty($row['total_allowed_quantity'])) ? $row['total_allowed_quantity'] : 0;
                                                             ?>
-                                                            <li><a href="" class="quick-view-btn" data-tip="Quick View" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view"><i class="fa fa-search"></i></a></li>
+                                                            <li><a href="" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view"><i class="fa fa-search"></i></a></li>
                                                             <li>
                                                                 <?php if ($row['variants'][0]['cart_count'] != 0) { ?>
-                                                                    <a href="<?= base_url('cart') ?>" data-tip="Go to Cart">
+                                                                    <a href="<?= base_url('cart') ?>" data-tip="<?= label('go_to_cart', 'Go to Cart') ?>">
                                                                         <i class='fa fa-arrow-right'></i>
                                                                     </a>
                                                                 <?php } else { ?>
-                                                                    <a href="" class="add_to_cart" data-tip="Add to Cart" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $row['name'] ?>" data-product-image="<?= $row['image'] ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-max="<?= $data_max; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $row['short_description']; ?>" data-izimodal-open="<?= $modal ?>">
+                                                                    <a href="" class="add_to_cart" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $row['name'] ?>" data-product-image="<?= $row['image'] ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-max="<?= $data_max; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $row['short_description']; ?>" data-izimodal-open="<?= $modal ?>">
                                                                         <i class="fa fa-shopping-cart"></i>
                                                                     </a>
                                                                 <?php } ?>
                                                             </li>
                                                             <li>
                                                                 <?php $variant_id = (count($row['variants']) <= 1) ? $row['variants'][0]['id'] : ""; ?>
-                                                                <a href="#" class="compare" data-tip="Compare" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
+                                                                <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
                                                                     <i class="fa fa-random"></i>
                                                                 </a>
                                                             </li>
@@ -316,21 +316,21 @@
                                                         $data_step = (isset($row['quantity_step_size']) && !empty($row['quantity_step_size'])) ? $row['quantity_step_size'] : 1;
                                                         $data_max = (isset($row['total_allowed_quantity']) && !empty($row['total_allowed_quantity'])) ? $row['total_allowed_quantity'] : 0;
                                                         ?>
-                                                        <li><a href="" class="quick-view-btn" data-tip="Quick View" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view"><i class="fa fa-search"></i></a></li>
+                                                        <li><a href="" class="quick-view-btn" data-tip="<?= label('quick_view', 'Quick View') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view"><i class="fa fa-search"></i></a></li>
                                                         <li>
                                                             <?php if ($row['variants'][0]['cart_count'] != 0) { ?>
-                                                                <a href="<?= base_url('cart') ?>" data-tip="Go to Cart">
+                                                                <a href="<?= base_url('cart') ?>" data-tip="<?= label('go_to_cart', 'Go to Cart') ?>">
                                                                     <i class='fa fa-arrow-right'></i>
                                                                 </a>
                                                             <?php } else { ?>
-                                                                <a href="" class="add_to_cart" data-tip="Add to Cart" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $row['name'] ?>" data-product-image="<?= $row['image'] ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-max="<?= $data_max; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $row['short_description']; ?>" data-izimodal-open="<?= $modal ?>">
+                                                                <a href="" class="add_to_cart" data-tip="<?= label('add_to_cart', 'Add to Cart') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>" data-product-title="<?= $row['name'] ?>" data-product-image="<?= $row['image'] ?>" data-product-price="<?= $variant_price; ?>" data-min="<?= $data_min; ?>" data-max="<?= $data_max; ?>" data-step="<?= $data_step; ?>" data-product-description="<?= $row['short_description']; ?>" data-izimodal-open="<?= $modal ?>">
                                                                     <i class="fa fa-shopping-cart"></i>
                                                                 </a>
                                                             <?php } ?>
                                                         </li>
                                                         <li>
                                                             <?php $variant_id = (count($row['variants']) <= 1) ? $row['variants'][0]['id'] : ""; ?>
-                                                            <a href="#" class="compare" data-tip="Compare" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
+                                                            <a href="#" class="compare" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
                                                                 <i class="fa fa-random"></i>
                                                             </a>
                                                         </li>
@@ -398,7 +398,7 @@
                         <?php } ?>
                         <?php if ((!isset($sub_categories) || empty($sub_categories)) && (!isset($products) || empty($products['product']))) { ?>
                             <div class="col-12 text-center">
-                                <h1 class="h2">No Products Found.</h1>
+                                <h1 class="h2"><?= label('no_products_found', 'No Products Found.') ?></h1>
                                 <a href="<?= base_url('products') ?>" class="button button-rounded button-warning"><?= !empty($this->lang->line('go_to_shop')) ? $this->lang->line('go_to_shop') : 'Go to Shop' ?></a>
                             </div>
                         <?php } ?>
@@ -412,7 +412,7 @@
         <!-- Mobile Filter Menu -->
         <div class="filter-nav js-filter-nav filter-nav-sm">
             <div class="filter-nav__list js-filter-nav__list">
-                <h3 class="mt-0">Showing <span class="text-primary">12</span> Products</h3>
+                <h3 class="mt-0"><?= label('showing', 'Showing') ?> <span class="text-primary">12</span> <?= label('products', 'Products') ?></h3>
                 <div class="col-md-4 order-md-1 col-lg-3">
                     <div id="product-filters-mobile">
                         <?php if (isset($products['filters']) && !empty($products['filters'])) { ?>

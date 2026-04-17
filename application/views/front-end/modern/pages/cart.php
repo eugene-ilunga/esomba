@@ -42,7 +42,7 @@
                                         <tr>
                                             <td class="product-removal">
                                                 <ion-icon name="close-outline" class="remove-product pointer" id="remove_inventory"
-                                                    data-id="<?= $row['id']; ?>" title="Remove From Cart"></ion-icon>
+                                                    data-id="<?= $row['id']; ?>" title="<?= label('remove_from_cart', 'Remove From Cart') ?>"></ion-icon>
                                             </td>
                                             <td>
                                                 <a href="<?= base_url('products/details/' . $row['slug']) ?>" target="_blank">
@@ -219,8 +219,9 @@
                                                     <div class="product-icon-onhover">
                                                         <div class="product-icon-spacebtw">
                                                             <div class="shuffle-box">
+                                                                <?php $variant_id = (isset($later_pro['variants']) && count($later_pro['variants']) <= 1) ? $later_pro['variants'][0]['id'] : ""; ?>
                                                                 <a class="compare text-reset text-decoration-none shuffle"
-                                                                    data-tip="Compare" data-product-id="<?= $product_row['id'] ?>"
+                                                                    data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $later_pro['id'] ?>"
                                                                     data-product-variant-id="<?= $variant_id ?>">
                                                                     <ion-icon name="shuffle-outline"
                                                                         class="ion-icon-hover pointer shuffle ionicon-compare-outline text-dark"></ion-icon>
@@ -228,7 +229,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="product-icon-spacebtw">
-                                                            <div class="add-to-fav-btn" title="like"
+                                                            <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>"
                                                                 data-product-id="<?= $later_pro['id'] ?>">
                                                                 <ion-icon
                                                                     class="ion-icon ion-icon-hover <?= ($later_pro['is_favorite'] == 1) ? 'ionicon-heart text-danger' : 'ionicon-heart-outline text-dark' ?>"
@@ -236,7 +237,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="product-icon-spacebtw">
-                                                            <div class="quick-search-box quickview-trigger" data-tip="Quick View"
+                                                            <div class="quick-search-box quickview-trigger" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                                 data-product-id="<?= $later_pro['id'] ?>"
                                                                 data-product-variant-id="<?= $later_pro['variants'][0]['id'] ?>"
                                                                 data-izimodal-open="#quick-view">
@@ -355,7 +356,7 @@
                                                 <div class="product-icon-spacebtw">
                                                     <div class="shuffle-box">
                                                         <a class="compare text-reset text-decoration-none shuffle"
-                                                            data-tip="Compare" data-product-id="<?= $product_row['id'] ?>"
+                                                            data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $row['id'] ?>"
                                                             data-product-variant-id="<?= $variant_id ?>">
                                                             <ion-icon name="shuffle-outline"
                                                                 class="ion-icon-hover pointer shuffle"></ion-icon>
@@ -363,7 +364,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-icon-spacebtw">
-                                                    <div class="add-to-fav-btn" title="like"
+                                                    <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>"
                                                         data-product-id="<?= $row['id'] ?>">
                                                         <ion-icon
                                                             class="ion-icon ion-icon-hover <?= ($row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>"
@@ -371,7 +372,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-icon-spacebtw">
-                                                    <div class="quick-search-box quickview-trigger" data-tip="Quick View"
+                                                    <div class="quick-search-box quickview-trigger" data-tip="<?= label('quick_view', 'Quick View') ?>"
                                                         data-product-id="<?= $row['id'] ?>"
                                                         data-product-variant-id="<?= $row['variants'][0]['id'] ?>"
                                                         data-izimodal-open="#quick-view">

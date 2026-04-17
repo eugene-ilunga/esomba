@@ -61,9 +61,9 @@
                                             </div>
                                             <div class="product-icon-onhover">
                                                 <div class="product-icon-spacebtw">
-                                                    <?php $variant_id = isset($product_row['variants']) ? (count($product_row['variants']) <= 1) : ""; ?>
+                                                    <?php $variant_id = isset($row['variants']) ? (count($row['variants']) <= 1 ? $row['variants'][0]['id'] : "") : ""; ?>
                                                     <div class="shuffle-box">
-                                                        <a class="compare text-reset text-decoration-none shuffle" data-tip="Compare" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
+                                                        <a class="compare text-reset text-decoration-none shuffle" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
                                                             <ion-icon name="shuffle-outline" class="ion-icon-hover pointer shuffle"></ion-icon>
                                                         </a>
                                                     </div>
@@ -71,7 +71,7 @@
                                                 <div class="product-icon-spacebtw">
                                                     <div class="quick-search-box">
                                                         
-                                                        <div class="quick-search-box quickview-trigger" data-tip="Quick View" data-product-id="<?= $product_row['id'] ?>" data-product-variant-id="<?= $product_row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view">
+                                                        <div class="quick-search-box quickview-trigger" data-tip="<?= label('quick_view', 'Quick View') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quick-view">
                                                             <ion-icon name="search-outline" class="ion-icon-hover pointer" data-bs-toggle="modal" data-bs-target="#quickview"></ion-icon>
                                                         </div>
                                                     </div>

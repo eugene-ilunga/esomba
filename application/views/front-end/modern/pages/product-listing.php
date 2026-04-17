@@ -114,10 +114,10 @@
                         <h3 class="section-title"><?= label('products', 'Products') ?></h3>
                         <div class="d-flex gap-2">
                             <a id="product_grid_view_btn" class="grid-list-icon-box link-dark">
-                                <ion-icon class="grid-icons-outline" title="Grid view"></ion-icon>
+                                <ion-icon class="grid-icons-outline" title="<?= label('grid_view', 'Grid view') ?>"></ion-icon>
                             </a>
                             <a id="product_list_view_btn" class="grid-list-icon-box link-dark">
-                                <ion-icon class="list-icons-outline" title="List view"></ion-icon>
+                                <ion-icon class="list-icons-outline" title="<?= label('list_view', 'List view') ?>"></ion-icon>
                             </a>
                             <div class="sort-by-btn d-none d-lg-block">
                                 <select class="form-select" id="product_sort_by" aria-label="Default select example">
@@ -167,7 +167,7 @@
                                 <div class="card list-view-card mb-3">
                                     <div class="rating-div">
                                         <div class="product-icon-spacebtw">
-                                            <div class="add-to-fav-btn" title="like" data-product-id="<?= $row['id'] ?>">
+                                            <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>" data-product-id="<?= $row['id'] ?>">
                                                 <ion-icon class="ion-icon ion-icon-hover <?= ($row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>" name="<?= ($row['is_favorite'] == 1) ? 'heart' : 'heart-outline' ?>"></ion-icon>
                                             </div>
                                         </div>
@@ -212,7 +212,7 @@
                                                                     <?= $settings['currency'] . number_format($row['variants'][0]['price']) ?>
                                                                 </span>
                                                                 <span class="text-success fw-bold">
-                                                                    <span class="product-discount-label fw-bold"><?= $row['sale_discount'] ?>% off</span>
+                                                                    <span class="product-discount-label fw-bold"><?= $row['sale_discount'] ?>% <?= label('off', 'off') ?></span>
                                                                 </span>
                                                             <?php } elseif (!empty($row['variants'][0]['price']) && $row['variants'][0]['special_price'] < $row['variants'][0]['price'] && ($row['variants'][0]['special_price'] != 0)) { 
                                                                 // Calculate discount percentage for the specific variant being displayed
@@ -224,12 +224,12 @@
                                                                     <?= $settings['currency'] . number_format($row['variants'][0]['price']) ?>
                                                                 </span>
                                                                 <span class="text-success fw-bold">
-                                                                    <span class="product-discount-label fw-bold"><?= $discount_percentage ?>% off</span>
+                                                                    <span class="product-discount-label fw-bold"><?= $discount_percentage ?>% <?= label('off', 'off') ?></span>
                                                                 </span>
                                                             <?php } ?>
                                                         </small>
                                                     </p>
-                                                    <p class="m-0"><small class="fw-bold text-success">Lowest Price Daily</small></p>
+                                                    <p class="m-0"><small class="fw-bold text-success"><?= label('lowest_price_daily', 'Lowest Price Daily') ?></small></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,7 +243,7 @@
                                 <div class="card list-view-card mb-3">
                                     <div class="rating-div">
                                         <div class="product-icon-spacebtw">
-                                            <div class="add-to-fav-btn" title="like" data-product-id="<?= $row['id'] ?>">
+                                            <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>" data-product-id="<?= $row['id'] ?>">
                                                 <ion-icon class="ion-icon ion-icon-hover <?= ($row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>" name="<?= ($row['is_favorite'] == 1) ? 'heart' : 'heart-outline' ?>"></ion-icon>
                                             </div>
                                         </div>
@@ -280,7 +280,7 @@
                                                                     <?= $settings['currency'] . number_format($row['variants'][0]['price']) ?>
                                                                 </span>
                                                                 <span class="text-success fw-bold">
-                                                                    <?= $row['sale_discount'] ?>% off
+                                                                    <?= $row['sale_discount'] ?>% <?= label('off', 'off') ?>
                                                                 </span>
                                                             <?php } elseif (!empty($row['variants'][0]['price']) && $row['variants'][0]['special_price'] < $row['variants'][0]['price'] && ($row['variants'][0]['special_price'] != 0)) { 
                                                                 // Calculate discount percentage for the specific variant being displayed
@@ -292,12 +292,12 @@
                                                                     <?= $settings['currency'] . number_format($row['variants'][0]['price']) ?>
                                                                 </span>
                                                                 <span class="fw-bold ms-2 text-success">
-                                                                    <?= $discount_percentage ?>% off
+                                                                    <?= $discount_percentage ?>% <?= label('off', 'off') ?>
                                                                 </span>
                                                             <?php } ?>
                                                         </small>
                                                     </p>
-                                                    <p class="m-0"><small class="fw-bold text-success">Lowest Price Daily</small></p>
+                                                    <p class="m-0"><small class="fw-bold text-success"><?= label('lowest_price_daily', 'Lowest Price Daily') ?></small></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -312,7 +312,7 @@
             <div class="card grid-view-card product-card" data-product-id="<?= $row['id'] ?>">
                 <div class="rating-div">
                     <div class="product-icon-spacebtw">
-                        <div class="add-to-fav-btn" title="like" data-product-id="<?= $row['id'] ?>">
+                        <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>" data-product-id="<?= $row['id'] ?>">
                             <ion-icon class="ion-icon ion-icon-hover <?= (isset($row['is_favorite']) && $row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>" name="<?= (isset($row['is_favorite']) && $row['is_favorite'] == 1) ? 'heart' : 'heart-outline' ?>"></ion-icon>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
                                             <?= $settings['currency'] . number_format($row['variants'][0]['price']) ?>
                                         </span>
                                         <span class="text-success fw-bold">
-                                            <span class="product-discount-label fw-bold"><?= $row['sale_discount'] ?>% off</span>
+                                            <span class="product-discount-label fw-bold"><?= $row['sale_discount'] ?>% <?= label('off', 'off') ?></span>
                                         </span>
                                     <?php } elseif (!empty($row['variants'][0]['price']) && $row['variants'][0]['special_price'] < $row['variants'][0]['price'] && ($row['variants'][0]['special_price'] != 0)) { 
                                         // Calculate discount percentage for the specific variant being displayed
@@ -360,7 +360,7 @@
                                             <?= $settings['currency'] . number_format($row['variants'][0]['price']) ?>
                                         </span>
                                         <span class="text-success fw-bold">
-                                            <span class="product-discount-label fw-bold"><?= $discount_percentage ?>% off</span>
+                                            <span class="product-discount-label fw-bold"><?= $discount_percentage ?>% <?= label('off', 'off') ?></span>
                                         </span>
                                     <?php } ?>
                                 </small>
@@ -396,13 +396,13 @@
                 <div class="product-icon-onhover">
                     <div class="product-icon-spacebtw">
                         <div class="shuffle-box">
-                            <a class="compare text-reset text-decoration-none shuffle" data-tip="Compare" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
+                            <a class="compare text-reset text-decoration-none shuffle" data-tip="<?= label('compare', 'Compare') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $variant_id ?>">
                                 <ion-icon name="shuffle-outline" class="ion-icon-hover pointer shuffle"></ion-icon>
                             </a>
                         </div>
                     </div>
                     <div class="product-icon-spacebtw">
-                        <div class="quick-search-box quickview-trigger" data-tip="Quick View" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quickview">
+                        <div class="quick-search-box quickview-trigger" data-tip="<?= label('quick_view', 'Quick View') ?>" data-product-id="<?= $row['id'] ?>" data-product-variant-id="<?= $row['variants'][0]['id'] ?>" data-izimodal-open="#quickview">
                             <ion-icon name="search-outline" class="ion-icon-hover pointer" data-bs-toggle="modal" data-bs-target="#quickview"></ion-icon>
                         </div>
                     </div>
@@ -415,8 +415,8 @@
                 <?php } ?>
                 <?php if ((!isset($sub_categories) || empty($sub_categories)) && (!isset($products) || empty($products['product']))) { ?>
                     <div class="col-12 py-4 text-center">
-                        <h1 class="h2">No Products Found.</h1>
-                        <a href="<?= base_url('products') ?>" class="btn btn-primary"><?= label($this->lang->line('go_to_shop')) ? $this->lang->line('go_to_shop') : 'Go to Shop' ?></a>
+                        <h1 class="h2"><?= label('no_products_found', 'No Products Found.') ?></h1>
+                        <a href="<?= base_url('products') ?>" class="btn btn-primary"><?= label('go_to_shop', 'Go to Shop') ?></a>
                     </div>
                 <?php } ?>
             </div>

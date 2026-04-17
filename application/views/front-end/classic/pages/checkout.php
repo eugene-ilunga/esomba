@@ -207,7 +207,7 @@
                                             <label for="cod">
                                                 <td>
                                                     <label for="cod">
-                                                        <input id="cod" title="<?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? 'Cash on delivery is not allowed for one of the item in your cart' : 'Please select one of this options.' ?>" name="payment_method" type="radio" value="COD" <?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? 'disabled' : '' ?>>
+                                                        <input id="cod" title="<?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? label('cod_not_allowed_in_cart_message', 'Cash on delivery is not allowed for one of the item in your cart') : label('select_one_payment_option_message', 'Please select one of this options.') ?>" name="payment_method" type="radio" value="COD" <?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? 'disabled' : '' ?>>
                                                     </label>
                                                 </td>
                                                 <td>

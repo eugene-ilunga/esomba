@@ -192,7 +192,7 @@
                             <div class="form-check">
                                 <?php if (isset($payment_methods['cod_method']) && $payment_methods['cod_method'] == 1 && $cart[0]['type'] != 'digital_product') { ?>
                                     <label class="form-check-label" for="cod">
-                                        <input class="form-check-input" id="cod" title="<?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? 'Cash on delivery is not allowed for one of the item in your cart' : 'Please select one of this options.' ?>" name="payment_method" type="radio" value="COD" <?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? 'disabled' : '' ?>>
+                                        <input class="form-check-input" id="cod" title="<?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? label('cod_not_allowed_in_cart_message', 'Cash on delivery is not allowed for one of the item in your cart') : label('select_one_payment_option_message', 'Please select one of this options.') ?>" name="payment_method" type="radio" value="COD" <?= isset($cart[0]['is_cod_allowed']) && $cart[0]['is_cod_allowed'] == 0 ? 'disabled' : '' ?>>
                                         <div class="payment-type-img-box">
                                             <img src="<?= base_url('assets/front_end/modern/image/pictures/cod-logo.jpg') ?>" alt="">
                                         </div>

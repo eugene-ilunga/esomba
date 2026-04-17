@@ -125,9 +125,9 @@
                                         <p> <span class="text-muted">
                                                 <?= !empty($this->lang->line('courier_agency')) ? $this->lang->line('courier_agency') : 'Courier Agency' ?>
                                                 : </span><a href="<?= $item['url'] ?>"
-                                                title="click here to trace the order"><?= $item['courier_agency'] ?></a> </p>
+                                                title="<?= label('click_here_to_trace_order', 'click here to trace the order') ?>"><?= $item['courier_agency'] ?></a> </p>
                                         <p class="text-muted" data-toggle="tooltip" data-placement="top"
-                                            title="Copy this Tracking ID and trace your order with Courier Agency.">
+                                            title="<?= label('copy_tracking_id_message', 'Copy this Tracking ID and trace your order with Courier Agency.') ?>">
                                             <?= !empty($this->lang->line('tracking_id')) ? $this->lang->line('tracking_id') : 'Tracking ID' ?>
                                             <span class="font-weight-bold text-dark"> : <?= $item['tracking_id'] ?></span>
                                         </p>
@@ -175,18 +175,17 @@
                                         <?php if ($is_download[0]['is_download'] == 0) { ?>
                                             <div class="media-body mt-3">
                                                 <a href="<?= base_url('products/download_link_hash/' . $item['id']) ?>"
-                                                    title="Download Product" class="btn btn-outline-info"><i
-                                                        class="fas fa-download"></i> Download</a>
+                                                    title="<?= label('download_product', 'Download Product') ?>" class="btn btn-outline-info"><i
+                                                        class="fas fa-download"></i> <?= label('download', 'Download') ?></a>
                                             </div>
                                         <?php } else { ?>
-                                            <span class="text-danger">The item which you had purchased has been downloaded
-                                                already!</span>
+                                            <span class="text-danger"><?= label('item_already_downloaded_message', 'The item which you had purchased has been downloaded already!') ?></span>
 
                                         <?php } ?>
                                     <?php }
                                     if ($item['type'] == 'digital_product' && $item['download_allowed'] == 0) { ?>
                                         <div class="media-body mt-3">
-                                            <span class="text-danger">You will receive this item from seller via email.</span>
+                                            <span class="text-danger"><?= label('item_will_be_received_via_email', 'You will receive this item from seller via email.') ?></span>
 
                                         </div>
                                     <?php } ?>

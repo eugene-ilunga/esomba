@@ -859,7 +859,7 @@ $whatsapp_order_text = rawurlencode(
                                             <button type="radio"
                                                 class="btn text-primary clear-rating text-hover-effect d-none"
                                                 data-target="#star-rating"
-                                                title="Clear"><?= label('clear', 'Clear') ?></button>
+                                                title="<?= label('clear', 'Clear') ?>"><?= label('clear', 'Clear') ?></button>
                                         </div>
                                         <?php if (!empty($my_rating)) { ?>
                                             <input type="hidden" name="rating_id"
@@ -888,7 +888,7 @@ $whatsapp_order_text = rawurlencode(
                                             multiple>
                                     </div>
                                     <div class="text-end">
-                                        <button type="submit" title="Submit" class="btn submit-btn"
+                                        <button type="submit" title="<?= label('submit', 'Submit') ?>" class="btn submit-btn"
                                             id="rating-submit-btn"><?= label('submit', 'Submit') ?></button>
                                     </div>
                                 </form>
@@ -918,7 +918,7 @@ $whatsapp_order_text = rawurlencode(
                                             <button type="radio"
                                                 class="btn text-primary clear-rating text-hover-effect d-none"
                                                 data-target="#star-rating"
-                                                title="Clear"><?= label('clear', 'Clear') ?></button>
+                                                title="<?= label('clear', 'Clear') ?>"><?= label('clear', 'Clear') ?></button>
                                         </div>
                                         <input id="star-rating" name="rating" data-step="1"
                                             class="kv-ltr-theme-svg-star rating-loading star-rating"
@@ -941,7 +941,7 @@ $whatsapp_order_text = rawurlencode(
                                                 multiple>
                                         </div>
                                         <div class="text-end">
-                                            <button type="submit" title="Submit" class="btn submit-btn"
+                                            <button type="submit" title="<?= label('submit', 'Submit') ?>" class="btn submit-btn"
                                                 id="edit-rating-submit-btn"><?= label('submit', 'Submit') ?></button>
                                         </div>
                                     </div>
@@ -1153,7 +1153,7 @@ $whatsapp_order_text = rawurlencode(
                                     class="text-reset text-decoration-none">
                                     <div class="card card-h-418 product-card" data-product-id="<?= $row['id'] ?>">
                                         <div class="product-icon-spacebtw">
-                                            <div class="add-to-fav-btn" title="like" data-product-id="<?= $row['id'] ?>">
+                                            <div class="add-to-fav-btn" title="<?= label('like', 'Like') ?>" data-product-id="<?= $row['id'] ?>">
                                                 <ion-icon
                                                     class="ion-icon ion-icon-hover add-to-fav-btn <?= ($row['is_favorite'] == 1) ? 'heart text-danger' : 'heart-outline text-dark' ?>"
                                                     name="<?= ($row['is_favorite'] == 1) ? 'heart' : 'heart-outline' ?>"></ion-icon>
