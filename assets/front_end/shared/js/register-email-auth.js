@@ -43,9 +43,96 @@
     return fallbackMessage;
   }
 
+  function setMessage($box, message, type) {
+    if (!$box || !$box.length) {
+      return;
+    }
+
+    if (!message) {
+      $box.html("");
+      return;
+    }
+
+    $box.html(
+      '<div class="alert alert-' + (type === "success" ? "success" : "danger") + '">' +
+        message +
+        "</div>",
+    );
+  }
+
+  function syncCartAndRedirect() {
+    var redirectUrl = base_url + "my-account";
+
+    try {
+      if (window.localStorage && localStorage.getItem("cart") && typeof window.cart_sync === "function") {
+        var syncResult = window.cart_sync();
+        if (syncResult && typeof syncResult.then === "function") {
+          syncResult
+            .then(function () {
+              window.location.href = redirectUrl;
+            })
+            .catch(function () {
+              window.location.href = redirectUrl;
+            });
+          return;
+        }
+      }
+    } catch (error) {
+      // Ignore cart sync issues and continue redirecting.
+    }
+
+    window.location.href = redirectUrl;
+  }
+
+  function loginWithEmail(credentials, callbacks) {
+    var options = callbacks || {};
+
+    $.ajax({
+      type: "POST",
+      url: base_url + "home/login",
+      data: {
+        identity: credentials.identity,
+        password: credentials.password,
+        type: "email",
+        [csrfName]: csrfHash,
+      },
+      dataType: "json",
+      beforeSend: function () {
+        if (typeof options.beforeSend === "function") {
+          options.beforeSend();
+        }
+      },
+      success: function (result) {
+        updateCsrf(result);
+
+        if (result.error === false) {
+          if (typeof options.onSuccess === "function") {
+            options.onSuccess(result);
+          }
+          return;
+        }
+
+        if (typeof options.onError === "function") {
+          options.onError(result.message || "Unable to log you in.");
+        }
+      },
+      error: function (xhr) {
+        if (typeof options.onError === "function") {
+          options.onError(
+            extractErrorMessage(xhr, "Unable to log you in."),
+          );
+        }
+      },
+    });
+  }
+
   function setEmailOnlyUi() {
     var $registerDiv = $("#register_div[data-registration-mode='email']");
     var $signUpForm = $registerDiv.find("#sign-up-form");
+    var $pageLoginForm = $registerDiv
+      .closest(".register-login-section")
+      .find(".login-section form.form-submit-event")
+      .first();
     var $emailLoginInput = $("#email-form")
       .find("input[name='identity'], input[type='email']")
       .first();
@@ -65,12 +152,19 @@
 
     $("#mobile-form").addClass("d-none");
     if ($mobileLoginInput.length) {
+      $mobileLoginInput.attr("data-login-name", $mobileLoginInput.attr("name") || "");
+      $mobileLoginInput.removeAttr("name");
       $mobileLoginInput.removeAttr("required");
     }
 
     $("#email-form").removeClass("d-none").show();
     if ($emailLoginInput.length) {
+      $emailLoginInput.attr("name", "identity");
       $emailLoginInput.attr("required", "required");
+    }
+
+    if ($pageLoginForm.length && !$pageLoginForm.find("input[name='type']").length) {
+      $pageLoginForm.append('<input type="hidden" name="type" value="email">');
     }
 
     $("#send_forgot_password_otp_form").hide();
@@ -139,22 +233,42 @@
           $submitBtn.attr("disabled", false).html(submitBtnHtml);
 
           if (result.error === false) {
-            $form[0].reset();
-            $("#mobile-form").addClass("d-none");
-            $("#email-form").removeClass("d-none").show();
-            if ($emailLoginInput.length) {
-              $emailLoginInput.val(email);
-            }
-            $("#sign-up-error").html(
-              '<div class="alert alert-success">' + result.message + "</div>",
+            setMessage(
+              $("#sign-up-error"),
+              "Account created. Signing you in...",
+              "success",
             );
-            fireToast("success", result.message);
+
+            loginWithEmail(
+              {
+                identity: email,
+                password: password,
+              },
+              {
+                beforeSend: function () {
+                  $submitBtn.attr("disabled", true).html("Signing in...");
+                },
+                onSuccess: function () {
+                  $form[0].reset();
+                  $("#mobile-form").addClass("d-none");
+                  $("#email-form").removeClass("d-none").show();
+                  if ($emailLoginInput.length) {
+                    $emailLoginInput.val(email);
+                  }
+                  fireToast("success", result.message);
+                  syncCartAndRedirect();
+                },
+                onError: function (message) {
+                  $submitBtn.attr("disabled", false).html(submitBtnHtml);
+                  setMessage($("#sign-up-error"), message, "error");
+                  fireToast("error", message);
+                },
+              },
+            );
             return;
           }
 
-          $("#sign-up-error").html(
-            '<div class="alert alert-danger">' + result.message + "</div>",
-          );
+          setMessage($("#sign-up-error"), result.message, "error");
           fireToast("error", result.message);
         },
         error: function (xhr) {
@@ -164,11 +278,81 @@
           );
 
           $submitBtn.attr("disabled", false).html(submitBtnHtml);
-          $("#sign-up-error").html(
-            '<div class="alert alert-danger">' + errorMessage + "</div>",
-          );
+          setMessage($("#sign-up-error"), errorMessage, "error");
           fireToast("error", errorMessage);
         },
+      });
+    });
+  }
+
+  function bindEmailLogin() {
+    var $registerLoginSection = $("#register_div[data-registration-mode='email']")
+      .closest(".register-login-section");
+    var $loginForms = $registerLoginSection.find(".login-section form.form-submit-event");
+
+    if (!$loginForms.length) {
+      return;
+    }
+
+    $loginForms.each(function () {
+      var $form = $(this);
+
+      if ($.fn.validate && typeof $form.validate === "function") {
+        try {
+          $form.validate().destroy();
+        } catch (error) {
+          // Ignore validator teardown failures and continue with direct handling.
+        }
+      }
+
+      $form.attr("novalidate", "novalidate");
+      $form.off("submit.registerEmailAuth");
+      $form.on("submit.registerEmailAuth", function (e) {
+        var $currentForm = $(this);
+        var $identityInput = $currentForm
+          .find("input[name='identity'], input[name='email']")
+          .filter(":visible")
+          .first();
+        var identity = $.trim($identityInput.val() || "");
+        var password = $.trim(
+          $currentForm.find("input[name='password']").filter(":visible").val() || "",
+        );
+        var $submitBtn = $currentForm.find(".submit_btn, button[type='submit']").first();
+        var submitBtnHtml = $submitBtn.html();
+        var $errorBox = $currentForm.find("#error_box, #error_box_email").first();
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        if (!identity || !password) {
+          setMessage($errorBox, "Email and password are required.", "error");
+          fireToast("error", "Email and password are required.");
+          return;
+        }
+
+        loginWithEmail(
+          {
+            identity: identity,
+            password: password,
+          },
+          {
+            beforeSend: function () {
+              setMessage($errorBox, "", "success");
+              $submitBtn.attr("disabled", true).html("Please Wait...");
+            },
+            onSuccess: function (result) {
+              $submitBtn.attr("disabled", false).html(submitBtnHtml);
+              setMessage($errorBox, result.message, "success");
+              fireToast("success", result.message);
+              syncCartAndRedirect();
+            },
+            onError: function (message) {
+              $submitBtn.attr("disabled", false).html(submitBtnHtml);
+              setMessage($errorBox, message, "error");
+              fireToast("error", message);
+            },
+          },
+        );
       });
     });
   }
@@ -238,6 +422,7 @@
 
     setEmailOnlyUi();
     bindEmailSignup();
+    bindEmailLogin();
     bindForgotPassword();
   }
 

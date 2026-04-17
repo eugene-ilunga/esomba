@@ -406,16 +406,22 @@ class Home extends CI_Controller
     public function login()
     {
 
-        $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
         $this->data['title'] = $this->lang->line('login_heading');
 
-        $_POST['identity'] = isset($_POST['mobile']) && !empty($_POST['mobile']) ? $_POST['mobile'] : (isset($_POST['email']) && !empty($_POST['email']) ? $_POST['email'] : '');
+        $posted_identity = trim((string) $this->input->post('identity', true));
+        if ($posted_identity !== '') {
+            $_POST['identity'] = $posted_identity;
+        } else {
+            $_POST['identity'] = isset($_POST['mobile']) && !empty($_POST['mobile'])
+                ? $_POST['mobile']
+                : (isset($_POST['email']) && !empty($_POST['email']) ? $_POST['email'] : '');
+        }
 
         $identity_column = $this->config->item('identity', 'ion_auth');
 
 
         // validate form input
-        if (preg_match($regex, $_POST['identity'])) {
+        if (filter_var($_POST['identity'], FILTER_VALIDATE_EMAIL) || (isset($_POST['type']) && $_POST['type'] != 'phone')) {
             $this->form_validation->set_rules('identity', ucfirst($identity_column), 'trim|required|valid_email|xss_clean');
         } else {
             $this->form_validation->set_rules('identity', ucfirst($identity_column), 'required|numeric|xss_clean');
