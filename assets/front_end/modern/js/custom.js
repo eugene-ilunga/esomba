@@ -7068,12 +7068,12 @@ $(document).ready(() => {
             });
           }
         },
-        error: function (xhr, status, error) {
-          Toast.fire({
-            icon: "error",
-            title: "Error updating cart. Please try again.",
-          });
-        },
+        // error: function (xhr, status, error) {
+        //   Toast.fire({
+        //     icon: "error",
+        //     title: "Error updating cart. Please try again.",
+        //   });
+        // },
       });
     }
   });
